@@ -307,24 +307,53 @@ function finish(){
 
   let benar = 0;
   let totalPG = 0;
-  let html = "<h3>Koreksi Essay</h3>";
+
+  let html = "<h2>Review Jawaban</h2>";
 
   soal.forEach((s,i)=>{
+
+    html += `<div style="margin-bottom:15px">`;
+    html += `<b>${i+1}. ${s.q}</b><br>`;
+
+    // ================= ESSAY =================
     if(s.type === "essay"){
       html += `
-      <div>
-      <b>${i+1}. ${s.q}</b><br>
-      Jawaban: ${jawaban[i] || "-"}<br>
-      Nilai: <input type="number" min="0" max="10"
-      onchange="isiNilai(${i}, this.value)">
-      </div><hr>`;
-    } else {
-      totalPG++;
-      if(jawaban[i] == s.k) benar++;
+        <i>Jawaban kamu:</i><br>
+        ${jawaban[i] || "<span style='color:red'>Belum diisi</span>"}<br>
+      `;
     }
+
+    // ================= PG =================
+    else {
+
+      totalPG++;
+
+      let user = jawaban[i];
+      let benarIndex = s.k;
+
+      let userText = user!=null ? s.a[user] : "Belum dijawab";
+      let kunciText = s.a[benarIndex];
+
+      let status = (user == benarIndex) ? "✅ Benar" : "❌ Salah";
+
+      if(user == benarIndex) benar++;
+
+      html += `
+        Jawaban kamu: <b>${userText}</b><br>
+        Kunci: <b>${kunciText}</b><br>
+        Status: <b>${status}</b>
+      `;
+    }
+
+    html += `</div><hr>`;
   });
 
-  pgScore = totalPG ? Math.round((benar/totalPG)*100) : 0;
+  // ================= NILAI =================
+  let pgScore = totalPG ? Math.round((benar/totalPG)*100) : 0;
+
+  html += `<h3>Nilai PG: ${pgScore}</h3>`;
+  html += `<p><i>Essay dinilai oleh guru</i></p>`;
+
   document.getElementById("exam").innerHTML = html;
 }
 
