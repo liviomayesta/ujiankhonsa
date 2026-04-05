@@ -1,260 +1,214 @@
 let bankSoal = {
 
-
-// ================= PAI BP (25) =================
+// ================= PAI BP (25 PG + 5 ESSAY) =================
 pai: [
-{q:"Istilah lain hari akhir adalah...",a:["Yaumul Akhir","Yaumul Ba’as","Yaumul Hisab","Yaumul Jaza"],k:0},
+{q:"Istilah lain hari akhir adalah...",a:["Yaumul Akhir","Yaumul Hisab","Yaumul Jaza","Yaumul Ba’as"],k:0},
 {q:"Arti Yaumul Ba’as adalah...",a:["Hari kebangkitan","Hari pembalasan","Hari kiamat","Hari perhitungan"],k:0},
-{q:"Hari penimbangan amal disebut...",a:["Yaumul Mizan","Yaumul Hisab","Yaumul Jaza","Yaumul Akhir"],k:0},
+{q:"Hari penimbangan amal disebut...",a:["Yaumul Mizan","Yaumul Hisab","Yaumul Jaza","Yaumul Ba’as"],k:0},
 {q:"Hikmah beriman kepada hari akhir adalah...",a:["Rajin berbuat baik","Malas","Sombong","Acuh"],k:0},
 {q:"Kiamat sugra adalah...",a:["Kiamat kecil","Kiamat besar","Hari akhir","Hari kebangkitan"],k:0},
-{q:"Tanda kecil kiamat adalah...",a:["Banyak maksiat","Dajjal","Matahari barat","Turunnya Isa"],k:0},
-{q:"Tanda besar kiamat adalah...",a:["Dajjal","Hujan","Angin","Petir"],k:0},
-{q:"Dajjal adalah...",a:["Makhluk penipu","Nabi","Malaikat","Manusia biasa"],k:0},
+{q:"Salah satu tanda kecil kiamat adalah...",a:["Banyak maksiat","Dajjal muncul","Matahari dari barat","Turunnya Nabi Isa"],k:0},
+{q:"Tanda besar kiamat adalah...",a:["Munculnya Dajjal","Hujan deras","Angin kencang","Petir"],k:0},
+{q:"Dajjal adalah...",a:["Makhluk penipu","Nabi","Malaikat","Orang saleh"],k:0},
 {q:"Manusia pertama adalah...",a:["Nabi Adam","Nabi Nuh","Nabi Musa","Nabi Isa"],k:0},
 {q:"Hari kiamat hanya diketahui oleh...",a:["Allah","Nabi","Malaikat","Manusia"],k:0},
-{q:"Hadis keragaman mengajarkan...",a:["Persatuan","Perpecahan","Permusuhan","Egois"],k:0},
-{q:"Manusia diciptakan dari...",a:["Tanah","Api","Air","Angin"],k:0},
-{q:"Keragaman adalah rahmat dari...",a:["Allah","Manusia","Lingkungan","Budaya"],k:0},
-{q:"Cara menghafal Al-Qur’an adalah...",a:["Rutin","Jarang","Sekali","Tidak"],k:0},
-{q:"Perbedaan bahasa menunjukkan...",a:["Kekuasaan Allah","Kesalahan","Kebetulan","Perbedaan biasa"],k:0},
-{q:"Hadis persatuan mengajarkan...",a:["Bersatu","Bertengkar","Egois","Acuh"],k:0},
-{q:"Idgham bighunnah adalah...",a:["Hukum tajwid","Fiqih","Akhlak","Sosial"],k:0},
-{q:"Ayat keragaman terdapat pada...",a:["Al-Hujurat","Al-Fatihah","An-Nas","Al-Ikhlas"],k:0},
-{q:"Orang berilmu memiliki...",a:["Derajat tinggi","Rendah","Sama","Biasa"],k:0},
-{q:"Langkah awal menghafal Qur’an...",a:["Niat","Main","Tidur","Santai"],k:0},
-{q:"Yaumul Hisab artinya...",a:["Perhitungan","Balasan","Kebangkitan","Kiamat"],k:0},
+{q:"Hari pembalasan disebut...",a:["Yaumul Jaza","Yaumul Hisab","Yaumul Ba’as","Yaumul Mizan"],k:0},
+{q:"Hari perhitungan amal disebut...",a:["Yaumul Hisab","Yaumul Jaza","Yaumul Ba’as","Yaumul Mizan"],k:0},
+{q:"Asal manusia pertama adalah dari...",a:["Tanah","Air","Api","Angin"],k:0},
+{q:"Keragaman manusia merupakan...",a:["Rahmat Allah","Masalah","Konflik","Perpecahan"],k:0},
+{q:"Hadis tentang keragaman mengajarkan...",a:["Persatuan","Perpecahan","Permusuhan","Egois"],k:0},
+{q:"Cara menghafal Al-Qur’an yang baik adalah...",a:["Rutin","Jarang","Tidak","Sekali"],k:0},
+{q:"Perbedaan bahasa menunjukkan...",a:["Kekuasaan Allah","Kesalahan","Kebetulan","Kelemahan"],k:0},
+{q:"Ayat tentang keragaman terdapat pada surat...",a:["Al-Hujurat","Al-Fatihah","An-Nas","Al-Ikhlas"],k:0},
+{q:"Orang berilmu memiliki derajat...",a:["Tinggi","Rendah","Sama","Biasa"],k:0},
+{q:"Langkah awal menghafal Qur’an adalah...",a:["Niat","Main","Tidur","Santai"],k:0},
+{q:"Hukum tajwid idgham bighunnah termasuk...",a:["Ilmu tajwid","Fiqih","Akhlak","Sejarah"],k:0},
+{q:"Hari kebangkitan disebut...",a:["Yaumul Ba’as","Yaumul Hisab","Yaumul Jaza","Yaumul Mizan"],k:0},
+{q:"Hari penimbangan amal disebut...",a:["Yaumul Mizan","Yaumul Hisab","Yaumul Jaza","Yaumul Ba’as"],k:0},
+{q:"Sikap menghadapi hari kiamat adalah...",a:["Siap dan beramal","Acuh","Malas","Takut saja"],k:0},
 {q:"Hikmah hari akhir adalah...",a:["Disiplin","Malas","Acuh","Sombong"],k:0},
-{q:"Salah satu tanda besar kiamat...",a:["Dajjal","Hujan","Angin","Awan"],k:0},
-{q:"Sikap beriman terhadap kiamat...",a:["Siap","Acuh","Malas","Takut saja"],k:0},
-{q:"Hari pembalasan disebut...",a:["Yaumul Jaza","Yaumul Ba’as","Yaumul Mizan","Yaumul Hisab"],k:0}
+
+{q:"Sebutkan istilah lain hari akhir dan artinya!",type:"essay"},
+{q:"Jelaskan arti Yaumul Hisab!",type:"essay"},
+{q:"Sebutkan hikmah beriman kepada hari akhir!",type:"essay"},
+{q:"Sebutkan tanda-tanda besar kiamat!",type:"essay"},
+{q:"Bagaimana sikap orang beriman terhadap hari kiamat?",type:"essay"}
 ],
 
 
-// ================= PAI UNGGULAN (30) =================
+// ================= PAI UNGGULAN =================
 paiu: [
 {q:"Shalat adalah...",a:["Ibadah wajib","Tiang agama","Perintah Allah","Semua benar"],k:3},
-{q:"Jumlah rukun Islam...",a:["3","4","5","6"],k:2},
-{q:"Usia mulai shalat...",a:["5","6","7","8"],k:2},
-{q:"Shalat diwajibkan saat...",a:["Isra Mi’raj","Hijrah","Badar","Uhud"],k:0},
-{q:"Gerakan pertama shalat...",a:["Takbir","Rukuk","Sujud","Duduk"],k:0},
-{q:"Posisi tangan saat berdiri...",a:["Di dada","Di kaki","Di belakang","Di samping"],k:0},
-{q:"Jumlah anggota sujud...",a:["7","6","5","8"],k:0},
-{q:"Posisi rukuk benar...",a:["Punggung rata","Bungkuk","Tegak","Miring"],k:0},
+{q:"Jumlah rukun Islam adalah...",a:["3","4","5","6"],k:2},
+{q:"Anak diperintah shalat sejak usia...",a:["5","6","7","8"],k:2},
+{q:"Shalat diwajibkan pada peristiwa...",a:["Isra Mi’raj","Hijrah","Badar","Uhud"],k:0},
+{q:"Gerakan pertama shalat adalah...",a:["Takbiratul ihram","Rukuk","Sujud","Duduk"],k:0},
+{q:"Posisi tangan saat berdiri...",a:["Di dada","Di belakang","Di kaki","Di samping"],k:0},
+{q:"Jumlah anggota sujud adalah...",a:["7","6","5","8"],k:0},
+{q:"Posisi rukuk yang benar...",a:["Punggung rata","Miring","Tegak","Bungkuk"],k:0},
 {q:"Hukum meninggalkan shalat...",a:["Dosa","Sunnah","Makruh","Wajib"],k:0},
-{q:"Syarat wajib shalat...",a:["Islam","Baligh","Berakal","Semua benar"],k:3},
-{q:"Waktu malaikat mendoakan...",a:["Shalat","Tidur","Main","Makan"],k:0},
-{q:"Bacaan sebelum Al-Fatihah...",a:["Doa iftitah","Tahiyat","Tasbih","Takbir"],k:0},
-{q:"Anak malas shalat harus...",a:["Dinasihati","Dibiarkan","Dimarahi","Ditinggal"],k:0},
-{q:"Tanda keberuntungan kiamat...",a:["Shalat","Harta","Kaya","Pintar"],k:0},
-{q:"Perawi hadis shalat...",a:["Bukhari","Muslim","Ahmad","Semua"],k:3},
-{q:"Shalat itu wajib",a:["Benar","Salah"],k:0},
+{q:"Syarat wajib shalat adalah...",a:["Islam","Baligh","Berakal","Semua benar"],k:3},
+{q:"Malaikat mendoakan orang yang...",a:["Shalat","Tidur","Main","Makan"],k:0},
+{q:"Bacaan sebelum Al-Fatihah adalah...",a:["Doa iftitah","Tahiyat","Tasbih","Takbir"],k:0},
+{q:"Anak malas shalat sebaiknya...",a:["Dinasihati","Dibiarkan","Dimarahi","Ditinggal"],k:0},
+{q:"Tanda keberuntungan di akhirat adalah...",a:["Shalat","Harta","Kaya","Pintar"],k:0},
+{q:"Perawi hadis shalat adalah...",a:["Bukhari","Muslim","Ahmad","Semua"],k:3},
+{q:"Shalat adalah tiang agama",a:["Benar","Salah"],k:0},
 {q:"Anak tidak wajib shalat",a:["Salah","Benar"],k:0},
 {q:"Takbir posisi tangan benar",a:["Benar","Salah"],k:0},
 {q:"Rukuk kepala harus rata",a:["Benar","Salah"],k:0},
 {q:"Sujud ada 7 anggota",a:["Benar","Salah"],k:0},
-{q:"Shalat wajib usia baligh",a:["Benar","Salah"],k:0},
-{q:"Duduk antara sujud penting",a:["Benar","Salah"],k:0},
+{q:"Shalat wajib saat baligh",a:["Benar","Salah"],k:0},
+{q:"Duduk antara dua sujud penting",a:["Benar","Salah"],k:0},
 {q:"Adab masjid harus sopan",a:["Benar","Salah"],k:0},
 {q:"Berdoa saat sujud dianjurkan",a:["Benar","Salah"],k:0},
-{q:"Meninggalkan shalat dosa",a:["Benar","Salah"],k:0},
-{q:"Anggota sujud ada...",a:["7","6","5","8"],k:0},
-{q:"Menunggu iqamah sebaiknya...",a:["Dzikir","Main","Tidur","Ngobrol"],k:0},
-{q:"Saat masjid tidak boleh...",a:["Ribut","Dzikir","Diam","Doa"],k:0},
-{q:"Shalat disebut tiang agama karena...",a:["Penting","Biasa","Tidak penting","Opsional"],k:0},
-{q:"Anak 7 tahun diajarkan shalat dengan...",a:["Latihan","Diam","Main","Tidur"],k:0}
+{q:"Meninggalkan shalat berdosa",a:["Benar","Salah"],k:0},
+
+{q:"Sebutkan 7 anggota sujud!",type:"essay"},
+{q:"Apa yang dilakukan saat menunggu iqamah?",type:"essay"},
+{q:"Apa yang harus dihindari saat di masjid?",type:"essay"},
+{q:"Mengapa shalat disebut tiang agama?",type:"essay"},
+{q:"Bagaimana cara mengajarkan shalat pada anak usia 7 tahun?",type:"essay"}
 ],
 
 
-// ================= INDONESIA (20) =================
+// ================= BAHASA INDONESIA =================
 indo: [
 {q:"Kalimat fakta adalah...",a:["Kenyataan","Pendapat","Perasaan","Harapan"],k:0},
-{q:"Akronim adalah...",a:["Singkatan khusus","Kata biasa","Kalimat","Huruf"],k:0},
-{q:"Kalimat fakta contoh...",a:["Air mendidih 100C","Saya suka","Mungkin","Sepertinya"],k:0},
-{q:"Informasi dalam teks adalah...",a:["Isi teks","Judul","Penulis","Halaman"],k:0},
-{q:"Pernyataan sesuai teks adalah...",a:["Benar","Salah","Opini","Tidak jelas"],k:0},
-{q:"Fakta atau opini?",a:["Fakta","Opini"],k:0},
-{q:"Kalimat opini adalah...",a:["Pendapat","Data","Fakta","Angka"],k:0},
-{q:"Kalimat opini contoh...",a:["Menurut saya","Air 100C","Bumi bulat","Data"],k:0},
-{q:"Kalimat fakta lain...",a:["Matahari terbit timur","Saya suka","Mungkin","Sepertinya"],k:0},
-{q:"Kalimat opini lain...",a:["Menurut saya","Data","Angka","Fakta"],k:0},
-{q:"Isi teks adalah...",a:["Topik","Halaman","Penulis","Gambar"],k:0},
-{q:"Pertanyaan sesuai teks...",a:["Relevan","Tidak","Acak","Asal"],k:0},
-{q:"Teks eksplanasi berisi...",a:["Penjelasan","Cerita","Puisi","Dialog"],k:0},
-{q:"Posyandu adalah...",a:["Pos pelayanan terpadu","Pos umum","Pos biasa","Pos kota"],k:0},
-{q:"Fakta vs opini berbeda pada...",a:["Kebenaran","Kata","Huruf","Bentuk"],k:0},
-{q:"Singkatan vs akronim...",a:["Berbeda","Sama","Mirip","Tidak jelas"],k:0},
-{q:"Huruf kapital untuk...",a:["Nama","Kata biasa","Kata kerja","Kata sifat"],k:0},
+{q:"Contoh kalimat fakta adalah...",a:["Air mendidih 100°C","Menurut saya","Sepertinya","Mungkin"],k:0},
+{q:"Kalimat opini adalah...",a:["Pendapat","Fakta","Data","Angka"],k:0},
+{q:"Contoh kalimat opini adalah...",a:["Menurut saya","Air 100°C","Bumi bulat","Data"],k:0},
+{q:"Akronim adalah...",a:["Singkatan yang dibaca sebagai kata","Singkatan huruf","Kalimat","Angka"],k:0},
+{q:"Contoh akronim adalah...",a:["UNESCO","SD","TV","HP"],k:0},
+{q:"Singkatan posyandu adalah...",a:["Pos pelayanan terpadu","Pos umum","Posyandu umum","Pos terpadu"],k:0},
+{q:"Huruf kapital digunakan untuk...",a:["Nama orang","Kata kerja","Kata sifat","Kata sambung"],k:0},
 {q:"Kalimat perintah adalah...",a:["Suruhan","Pendapat","Cerita","Data"],k:0},
-{q:"Kalimat ajakan adalah...",a:["Ayo","Data","Fakta","Angka"],k:0},
-{q:"Isi teks dipahami dari...",a:["Bacaan","Judul","Gambar","Penulis"],k:0}
+{q:"Contoh kalimat perintah...",a:["Tutup pintu!","Saya makan","Dia pergi","Kami belajar"],k:0},
+{q:"Isi teks adalah...",a:["Informasi utama","Gambar","Penulis","Judul"],k:0},
+{q:"Pertanyaan sesuai teks...",a:["Relevan","Tidak","Asal","Acak"],k:0},
+{q:"Teks eksplanasi berisi...",a:["Penjelasan","Cerita","Dialog","Puisi"],k:0},
+{q:"Fakta bersifat...",a:["Benar","Pendapat","Perasaan","Harapan"],k:0},
+{q:"Opini bersifat...",a:["Pendapat","Fakta","Data","Angka"],k:0},
+
+{q:"Jelaskan perbedaan fakta dan opini!",type:"essay"},
+{q:"Jelaskan perbedaan singkatan dan akronim!",type:"essay"},
+{q:"Buat contoh kalimat perintah!",type:"essay"},
+{q:"Jelaskan isi teks yang kamu baca!",type:"essay"},
+{q:"Buat kalimat dengan huruf kapital yang benar!",type:"essay"}
 ],
 
 
-// ================= INGGRIS (25) =================
+// ================= BAHASA INGGRIS =================
 inggris: [
-{q:"Bigger adalah...",a:["Comparative","Superlative","Positive","Verb"],k:0},
-{q:"Smaller adalah...",a:["Comparative","Superlative","Positive","Verb"],k:0},
-{q:"The biggest adalah...",a:["Superlative","Comparative","Positive","Verb"],k:0},
-{q:"Comparative digunakan untuk...",a:["Membandingkan 2","3","4","Banyak"],k:0},
-{q:"Superlative untuk...",a:["Paling","Lebih","Sama","Kurang"],k:0},
-{q:"Tall-taller-tallest benar?",a:["Ya","Tidak"],k:0},
-{q:"Kalimat salah comparative...",a:["More better","Bigger","Smaller","Faster"],k:0},
-{q:"Faster adalah...",a:["Comparative","Superlative","Positive","Verb"],k:0},
-{q:"Slowest adalah...",a:["Superlative","Comparative","Positive","Verb"],k:0},
-{q:"More beautiful adalah...",a:["Comparative","Superlative","Positive","Verb"],k:0},
-{q:"Most beautiful adalah...",a:["Superlative","Comparative","Positive","Verb"],k:0},
-{q:"Dialog comparative...",a:["Lebih","Paling","Sama","Kurang"],k:0},
+{q:"Bigger is...",a:["Comparative","Superlative","Positive","Verb"],k:0},
+{q:"The biggest is...",a:["Superlative","Comparative","Positive","Verb"],k:0},
+{q:"Smaller is...",a:["Comparative","Superlative","Positive","Verb"],k:0},
+{q:"Fast – faster – fastest is...",a:["Correct","Wrong","No","None"],k:0},
+{q:"Comparative is used for...",a:["2 things","3 things","Many","None"],k:0},
+{q:"Superlative means...",a:["The most","More","Less","Same"],k:0},
+{q:"More beautiful is...",a:["Comparative","Superlative","Positive","Verb"],k:0},
+{q:"Most beautiful is...",a:["Superlative","Comparative","Positive","Verb"],k:0},
+{q:"Good – better – best is...",a:["Correct","Wrong","No","None"],k:0},
 {q:"Translate bigger...",a:["Lebih besar","Paling besar","Besar","Kecil"],k:0},
 {q:"Translate biggest...",a:["Paling besar","Lebih besar","Besar","Kecil"],k:0},
-{q:"Translate faster...",a:["Lebih cepat","Cepat","Paling cepat","Lambat"],k:0},
-{q:"Guitar adalah...",a:["Alat musik","Hewan","Buah","Kota"],k:0},
-{q:"Piano adalah...",a:["Alat musik","Buah","Hewan","Tempat"],k:0},
-{q:"Drum adalah...",a:["Alat musik","Buah","Hewan","Tempat"],k:0},
-{q:"Flute adalah...",a:["Alat musik","Buah","Hewan","Tempat"],k:0},
-{q:"Violin adalah...",a:["Alat musik","Buah","Hewan","Tempat"],k:0},
-{q:"5 alat musik...",a:["Guitar dll","Buah","Hewan","Tempat"],k:0},
-{q:"Translate faster to Indo...",a:["Lebih cepat","Cepat","Lambat","Paling"],k:0},
-{q:"Translate smaller...",a:["Lebih kecil","Kecil","Paling kecil","Besar"],k:0},
-{q:"Translate biggest...",a:["Paling besar","Lebih besar","Besar","Kecil"],k:0},
-{q:"Comparative dari good...",a:["Better","Best","Good","More good"],k:0}
+{q:"Guitar is...",a:["Musical instrument","Animal","Fruit","Place"],k:0},
+{q:"Piano is...",a:["Musical instrument","Animal","Fruit","Place"],k:0},
+{q:"Drum is...",a:["Musical instrument","Animal","Fruit","Place"],k:0},
+{q:"Flute is...",a:["Musical instrument","Animal","Fruit","Place"],k:0},
+{q:"Violin is...",a:["Musical instrument","Animal","Fruit","Place"],k:0},
+{q:"Comparative of tall is...",a:["Taller","Tallest","Tall","More tall"],k:0},
+{q:"Superlative of tall is...",a:["Tallest","Taller","Tall","More tall"],k:0},
+{q:"Comparative of small is...",a:["Smaller","Smallest","Small","More small"],k:0},
+{q:"Superlative of small is...",a:["Smallest","Smaller","Small","More small"],k:0},
+
+{q:"Lengkapi dialog menggunakan comparative!",type:"essay"},
+{q:"Terjemahkan kalimat comparative ke Bahasa Indonesia!",type:"essay"},
+{q:"Terjemahkan kalimat ke Bahasa Inggris!",type:"essay"},
+{q:"Tuliskan bentuk comparative dan superlative!",type:"essay"},
+{q:"Sebutkan 5 nama alat musik dalam Bahasa Inggris!",type:"essay"}
 ],
 
 
-// ================= IPAS (20) =================
+// ================= IPAS =================
 ipas: [
 {q:"Siklus air disebut...",a:["Hidrologi","Evaporasi","Presipitasi","Infiltrasi"],k:0},
 {q:"Evaporasi adalah...",a:["Penguapan","Hujan","Resapan","Awan"],k:0},
-{q:"Infiltrasi adalah...",a:["Resapan","Penguapan","Hujan","Awan"],k:0},
+{q:"Presipitasi adalah...",a:["Hujan","Penguapan","Resapan","Awan"],k:0},
+{q:"Infiltrasi adalah...",a:["Air meresap","Hujan","Penguapan","Awan"],k:0},
 {q:"Manfaat siklus air...",a:["Kehidupan","Hiasan","Main","Tidak"],k:0},
 {q:"Faktor siklus air...",a:["Matahari","Lampu","Api","Angin"],k:0},
 {q:"Siklus air bersifat...",a:["Berulang","Sekali","Jarang","Tidak"],k:0},
-{q:"Presipitasi berkurang maka...",a:["Kering","Basah","Normal","Aman"],k:0},
+{q:"Jika hujan berkurang maka...",a:["Kekeringan","Banjir","Normal","Aman"],k:0},
 {q:"Upaya menjaga air...",a:["Hemat","Boros","Buang","Rusak"],k:0},
-{q:"Tahapan siklus air...",a:["Urut","Acak","Tidak","Salah"],k:0},
-{q:"Dampak positif manusia...",a:["Menjaga","Merusak","Acuh","Tidak"],k:0},
-{q:"Peran siklus air...",a:["Penting","Tidak","Biasa","Opsional"],k:0},
-{q:"Rantai makanan adalah...",a:["Hubungan makan","Minum","Tidur","Main"],k:0},
-{q:"Konsumen tingkat II...",a:["Pemakan hewan","Tumbuhan","Produsen","Pengurai"],k:0},
-{q:"Jamur berperan...",a:["Pengurai","Produsen","Konsumen","Predator"],k:0},
-{q:"Jika populasi berkurang...",a:["Terganggu","Normal","Baik","Aman"],k:0},
-{q:"Jaring makanan adalah...",a:["Kompleks","Sederhana","Tidak","Salah"],k:0},
 {q:"Produsen adalah...",a:["Tumbuhan","Hewan","Manusia","Jamur"],k:0},
-{q:"Peran tumbuhan...",a:["Produsen","Konsumen","Pengurai","Predator"],k:0},
-{q:"Makhluk hidup memiliki...",a:["Sifat","Tidak","Kosong","Hampa"],k:0},
-{q:"Pestisida berdampak...",a:["Negatif","Positif","Netral","Baik"],k:0}
+{q:"Konsumen tingkat II adalah...",a:["Pemakan hewan","Pemakan tumbuhan","Produsen","Pengurai"],k:0},
+{q:"Jamur berperan sebagai...",a:["Pengurai","Produsen","Konsumen","Predator"],k:0},
+{q:"Rantai makanan adalah...",a:["Hubungan makan","Minum","Tidur","Main"],k:0},
+{q:"Jika populasi berkurang...",a:["Terganggu","Normal","Baik","Aman"],k:0},
+{q:"Jaring makanan adalah...",a:["Lebih kompleks","Sederhana","Tidak","Salah"],k:0},
+
+{q:"Jelaskan tahapan siklus air!",type:"essay"},
+{q:"Sebutkan kegiatan manusia yang berdampak positif pada siklus air!",type:"essay"},
+{q:"Apa peran siklus air bagi kehidupan?",type:"essay"},
+{q:"Jelaskan urutan rantai makanan!",type:"essay"},
+{q:"Apa dampak jika salah satu populasi berkurang?",type:"essay"}
 ],
 
 
-// ================= PKN (20) =================
+// ================= PKN =================
 pkn: [
 {q:"Keberagaman adalah...",a:["Perbedaan","Kesamaan","Seragam","Sama"],k:0},
-{q:"Agama resmi Indonesia...",a:["6","5","4","7"],k:0},
+{q:"Jumlah agama resmi di Indonesia...",a:["6","5","4","7"],k:0},
 {q:"Sikap terhadap keberagaman...",a:["Toleransi","Egois","Marah","Acuh"],k:0},
 {q:"Cara memupuk toleransi...",a:["Menghargai","Membenci","Acuh","Marah"],k:0},
-{q:"Keragaman Indonesia meliputi...",a:["Budaya","Tidak","Kosong","Hampa"],k:0},
-{q:"Sikap sesuai cerita...",a:["Baik","Buruk","Acuh","Marah"],k:0},
-{q:"Faktor keragaman...",a:["Budaya","Tidak","Kosong","Hampa"],k:0},
-{q:"Manfaat keragaman...",a:["Kerukunan","Perpecahan","Masalah","Konflik"],k:0},
-{q:"Sikap yang benar...",a:["Baik","Buruk","Acuh","Marah"],k:0},
-{q:"Faktor keberagaman...",a:["Budaya","Tidak","Kosong","Hampa"],k:0},
-{q:"Perbedaan dalam masyarakat...",a:["Wajar","Tidak","Aneh","Salah"],k:0},
-{q:"Ciri keberagaman...",a:["Banyak","Sedikit","Kosong","Hampa"],k:0},
-{q:"Sikap menghadapi keberagaman...",a:["Toleransi","Egois","Marah","Acuh"],k:0},
-{q:"Arti toleransi...",a:["Menghargai","Membenci","Acuh","Marah"],k:0},
-{q:"Yang merusak kebhinekaan...",a:["Permusuhan","Toleransi","Damai","Rukun"],k:0},
-{q:"Akibat keberagaman...",a:["Kerukunan","Konflik","Masalah","Perpecahan"],k:0},
-{q:"Tantangan kebhinekaan...",a:["Perbedaan","Kesamaan","Seragam","Sama"],k:0},
-{q:"Contoh menjaga kerukunan...",a:["Tolong","Marah","Acuh","Egois"],k:0},
-{q:"Sikap kerukunan...",a:["Baik","Buruk","Acuh","Marah"],k:0},
-{q:"Tindakan tepat...",a:["Baik","Buruk","Acuh","Marah"],k:0}
+{q:"Manfaat keberagaman...",a:["Kerukunan","Perpecahan","Masalah","Konflik"],k:0},
+{q:"Contoh sikap toleransi...",a:["Menghargai","Membenci","Marah","Acuh"],k:0},
+{q:"Keragaman meliputi...",a:["Budaya","Tidak","Kosong","Hampa"],k:0},
+{q:"Akibat tidak toleransi...",a:["Konflik","Rukun","Damai","Baik"],k:0},
+{q:"Sikap rukun berarti...",a:["Hidup damai","Bertengkar","Acuh","Marah"],k:0},
+{q:"Perbedaan harus disikapi dengan...",a:["Bijak","Marah","Acuh","Egois"],k:0},
+{q:"Kerukunan menciptakan...",a:["Damai","Konflik","Masalah","Benci"],k:0},
+{q:"Contoh keragaman budaya...",a:["Tari","Tidak","Kosong","Hampa"],k:0},
+{q:"Toleransi artinya...",a:["Menghargai","Membenci","Acuh","Marah"],k:0},
+{q:"Persatuan dalam keberagaman disebut...",a:["Bhinneka Tunggal Ika","Satu","Beda","Campur"],k:0},
+{q:"Sikap menghargai perbedaan...",a:["Baik","Buruk","Acuh","Marah"],k:0},
+{q:"Keragaman bahasa adalah...",a:["Perbedaan bahasa","Satu bahasa","Tidak","Kosong"],k:0},
+{q:"Keragaman agama adalah...",a:["Perbedaan agama","Satu agama","Tidak","Kosong"],k:0},
+{q:"Sikap egois menyebabkan...",a:["Perpecahan","Kerukunan","Damai","Baik"],k:0},
+{q:"Sikap saling menghormati...",a:["Baik","Buruk","Acuh","Marah"],k:0},
+{q:"Hidup rukun berarti...",a:["Damai","Marah","Acuh","Benci"],k:0},
+
+{q:"Mengapa keberagaman harus dihargai di sekolah?",type:"essay"},
+{q:"Apa sikap yang harus dilakukan dalam keberagaman?",type:"essay"},
+{q:"Sebutkan contoh keberagaman budaya di Indonesia!",type:"essay"},
+{q:"Bagaimana cara menyelesaikan perbedaan?",type:"essay"},
+{q:"Sebutkan contoh sikap rukun di sekolah!",type:"essay"}
 ],
 
 
-// ================= MATEMATIKA (20) =================
+// ================= MATEMATIKA =================
 math: [
-{q:"7 jam setelah jam 2 adalah...",a:["9","8","7","10"],k:0},
 {q:"1 jam = ... menit",a:["60","30","120","90"],k:0},
-{q:"Penjumlahan waktu 1j + 2j...",a:["3 jam","2 jam","1 jam","4 jam"],k:0},
-{q:"Durasi waktu adalah...",a:["Selisih waktu","Jumlah","Kali","Bagi"],k:0},
-{q:"Durasi cerita...",a:["Benar","Salah","Tidak","Kosong"],k:0},
 {q:"2 jam = ... menit",a:["120","60","180","240"],k:0},
-{q:"3 jam + 2 jam...",a:["5 jam","4 jam","3 jam","6 jam"],k:0},
-{q:"5 jam - 2 jam...",a:["3 jam","2 jam","1 jam","4 jam"],k:0},
-{q:"Durasi kegiatan...",a:["Selisih","Jumlah","Kali","Bagi"],k:0},
-{q:"Jam + 7 jam...",a:["Tambah","Kurang","Kali","Bagi"],k:0},
-{q:"Penjumlahan waktu...",a:["Tambah","Kurang","Kali","Bagi"],k:0},
-{q:"Pengurangan waktu...",a:["Kurang","Tambah","Kali","Bagi"],k:0},
-{q:"Durasi soal cerita...",a:["Selisih","Jumlah","Kali","Bagi"],k:0},
-{q:"Waktu kegiatan...",a:["Durasi","Jumlah","Kali","Bagi"],k:0},
-{q:"Selisih waktu...",a:["Durasi","Jumlah","Kali","Bagi"],k:0},
-{q:"Keliling segitiga...",a:["Jumlah sisi","Luas","Volume","Panjang"],k:0},
-{q:"Segitiga sisi sama...",a:["Sama sisi","Sembarang","Siku","Tumpul"],k:0},
-{q:"Keliling segitiga 3 sisi...",a:["Jumlah","Kali","Bagi","Kurang"],k:0},
-{q:"Luas segitiga...",a:["1/2 at","at","pl","ss"],k:0},
-{q:"Rumus luas segitiga...",a:["1/2 x a x t","a x t","p x l","s x s"],k:0}
+{q:"3 jam = ... menit",a:["180","120","60","240"],k:0},
+{q:"1 jam 30 menit = ... menit",a:["90","60","120","150"],k:0},
+{q:"Durasi adalah...",a:["Selisih waktu","Jumlah","Kali","Bagi"],k:0},
+{q:"Penjumlahan waktu 2 jam + 3 jam...",a:["5 jam","4 jam","3 jam","6 jam"],k:0},
+{q:"Pengurangan waktu 5 jam - 2 jam...",a:["3 jam","2 jam","1 jam","4 jam"],k:0},
+{q:"7 jam setelah jam 2 adalah...",a:["9","8","7","10"],k:0},
+{q:"Keliling segitiga adalah...",a:["Jumlah sisi","Luas","Volume","Panjang"],k:0},
+{q:"Segitiga sama sisi memiliki sisi...",a:["Sama","Berbeda","Tidak","Kosong"],k:0},
+{q:"Rumus luas segitiga...",a:["1/2 x alas x tinggi","alas x tinggi","p x l","s x s"],k:0},
+{q:"Luas segitiga dengan alas 10 tinggi 8...",a:["40","80","20","10"],k:0},
+{q:"Segitiga memiliki berapa sisi...",a:["3","4","5","6"],k:0},
+{q:"Keliling segitiga 5+5+5...",a:["15","10","20","25"],k:0},
+{q:"Waktu dihitung dengan...",a:["Jam","Meter","Kg","Liter"],k:0},
+{q:"Menit ke jam dibagi...",a:["60","10","100","30"],k:0},
+{q:"Jam ke menit dikali...",a:["60","10","100","30"],k:0},
+{q:"Durasi kegiatan adalah...",a:["Selisih waktu","Jumlah","Kali","Bagi"],k:0},
+
+{q:"Hitung luas segitiga dengan alas 10 dan tinggi 8!",type:"essay"},
+{q:"Selesaikan soal cerita tentang durasi waktu!",type:"essay"}
 ]
 
 };
-
-
-// ================= ENGINE CBT =================
-let soal = [];
-let index = 0;
-let jawaban = [];
-
-function startExam(){
-  let mapel = document.getElementById("mapel").value;
-  soal = shuffle([...bankSoal[mapel]]);
-  jawaban = new Array(soal.length).fill(null);
-
-  document.getElementById("exam").classList.remove("hidden");
-
-  renderNav();
-  tampil();
-}
-
-function tampil(){
-  let q = soal[index];
-  let html = `<h3>${index+1}. ${q.q}</h3>`;
-
-  q.a.forEach((opsi,i)=>{
-    html += `
-    <label>
-    <input type="radio" name="opsi" value="${i}" 
-    ${jawaban[index]==i?"checked":""}
-    onchange="jawab(${i})">
-    ${opsi}
-    </label><br>`;
-  });
-
-  document.getElementById("question").innerHTML = html;
-}
-
-function jawab(i){
-  jawaban[index] = i;
-  renderNav();
-}
-
-function next(){ if(index < soal.length-1){ index++; tampil(); }}
-function prev(){ if(index > 0){ index--; tampil(); }}
-
-function renderNav(){
-  let nav = "";
-  soal.forEach((_,i)=>{
-    nav += `<button style="background:${jawaban[i]!=null?'green':'#ccc'}"
-    onclick="goto(${i})">${i+1}</button>`;
-  });
-  document.getElementById("nav").innerHTML = nav;
-}
-
-function goto(i){ index=i; tampil(); }
-
-function finish(){
-  let benar = 0;
-  soal.forEach((s,i)=>{ if(jawaban[i]==s.k) benar++; });
-  let nilai = Math.round((benar/soal.length)*100);
-  document.getElementById("result").innerHTML = "Nilai: "+nilai;
-}
-
-function shuffle(arr){ return arr.sort(()=>Math.random()-0.5); }
