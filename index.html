@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulasi STS Kelas 5</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+  <h2>Simulasi STS Kelas 5</h2>
+
+  <select id="mapel">
+    <option value="pai">PAI BP</option>
+    <option value="paiu">PAI Unggulan</option>
+    <option value="indo">Bahasa Indonesia</option>
+    <option value="inggris">Bahasa Inggris</option>
+    <option value="ipas">IPAS</option>
+    <option value="pkn">Pancasila</option>
+    <option value="math">Matematika</option>
+  </select>
+
+  <button onclick="startExam()">Mulai Ujian</button>
+
+  <div id="exam" class="hidden">
+    
+    <div class="topbar">
+      <div id="progress"></div>
+      <div id="timer">30:00</div>
+    </div>
+
+    <div class="main">
+      <div class="sidebar" id="nav"></div>
+
+      <div class="content">
+        <div id="question"></div>
+
+        <div class="navbtn">
+          <button onclick="prev()">Prev</button>
+          <button onclick="next()">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="finish" onclick="finish()">Selesai</button>
+  </div>
+
+  <h3 id="result"></h3>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

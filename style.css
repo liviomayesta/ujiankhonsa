@@ -1,0 +1,64 @@
+body {
+  font-family: Arial;
+  background: #f4f6f9;
+}
+
+.container {
+  width: 90%;
+  margin: auto;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+#progress {
+  width: 70%;
+  height: 10px;
+  background: #ddd;
+}
+
+#progress::after {
+  content: '';
+  display: block;
+  height: 10px;
+  background: #4caf50;
+  width: 0%;
+}
+
+.main {
+  display: flex;
+}
+
+.sidebar {
+  width: 20%;
+  background: #fff;
+  padding: 10px;
+}
+
+.sidebar button {
+  width: 40px;
+  margin: 5px;
+}
+
+.content {
+  width: 80%;
+  background: white;
+  padding: 20px;
+}
+
+.navbtn button {
+  margin: 10px;
+}
+
+.finish {
+  background: red;
+  color: white;
+  padding: 10px;
+}
+
+.hidden {
+  display: none;
+}
