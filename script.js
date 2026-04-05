@@ -212,3 +212,132 @@ math: [
 ]
 
 };
+
+// ================= ENGINE =================
+let soal = [];
+let index = 0;
+let jawaban = [];
+let nilaiEssay = {};
+let pgScore = 0;
+
+
+// ================= START =================
+function startExam(){
+  let mapel = document.getElementById("mapel").value;
+  soal = [...bankSoal[mapel]];
+  jawaban = new Array(soal.length).fill(null);
+  index = 0;
+
+  document.getElementById("exam").classList.remove("hidden");
+
+  renderNav();
+  tampil();
+}
+
+
+// ================= TAMPIL =================
+function tampil(){
+  let q = soal[index];
+
+  let html = `<h3>${index+1}. ${q.q}</h3>`;
+
+  if(q.type === "essay"){
+    html += `
+      <textarea 
+        style="width:100%; padding:10px;" 
+        rows="5"
+        placeholder="Tulis jawaban..."
+        oninput="jawabEssay(this.value)"
+      >${jawaban[index] || ""}</textarea>
+    `;
+  } else {
+    q.a.forEach((opsi,i)=>{
+      html += `
+        <label>
+          <input type="radio" name="opsi"
+          ${jawaban[index]==i?"checked":""}
+          onchange="jawab(${i})">
+          ${opsi}
+        </label><br>
+      `;
+    });
+  }
+
+  document.getElementById("question").innerHTML = html;
+}
+
+
+// ================= JAWAB =================
+function jawab(i){
+  jawaban[index] = i;
+  renderNav();
+}
+
+function jawabEssay(val){
+  jawaban[index] = val;
+  renderNav();
+}
+
+
+// ================= NAV =================
+function next(){ if(index < soal.length-1){ index++; tampil(); }}
+function prev(){ if(index > 0){ index--; tampil(); }}
+
+function renderNav(){
+  let nav = "";
+  soal.forEach((_,i)=>{
+    nav += `<button style="background:${jawaban[i]!=null?'green':'#ccc'}"
+    onclick="goto(${i})">${i+1}</button>`;
+  });
+  document.getElementById("nav").innerHTML = nav;
+}
+
+function goto(i){ index=i; tampil(); }
+
+
+// ================= FINISH =================
+function finish(){
+
+  let benar = 0;
+  let totalPG = 0;
+  let html = "<h3>Koreksi Essay</h3>";
+
+  soal.forEach((s,i)=>{
+    if(s.type === "essay"){
+      html += `
+      <div>
+      <b>${i+1}. ${s.q}</b><br>
+      Jawaban: ${jawaban[i] || "-"}<br>
+      Nilai: <input type="number" min="0" max="10"
+      onchange="isiNilai(${i}, this.value)">
+      </div><hr>`;
+    } else {
+      totalPG++;
+      if(jawaban[i] == s.k) benar++;
+    }
+  });
+
+  pgScore = totalPG ? Math.round((benar/totalPG)*100) : 0;
+  document.getElementById("exam").innerHTML = html;
+}
+
+
+// ================= HITUNG NILAI =================
+function isiNilai(i,val){
+  nilaiEssay[i] = Number(val);
+
+  let total = 0, count = 0;
+  for(let k in nilaiEssay){
+    total += nilaiEssay[k];
+    count++;
+  }
+
+  let essayScore = count ? (total/count)*10 : 0;
+  let final = Math.round((pgScore + essayScore)/2);
+
+  document.getElementById("result").innerHTML =
+  `Nilai PG: ${pgScore}<br>
+   Nilai Essay: ${Math.round(essayScore)}<br>
+   <b>Nilai Akhir: ${final}</b>`;
+}
+
