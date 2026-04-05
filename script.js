@@ -234,6 +234,7 @@ function startExam(){
   tampil();
 }
 
+console.log("SOAL AKTIF:", soal[index]);
 function tampil(){
   let q = soal[index];
   let html = `<h3>${index+1}. ${q.q}</h3>`;
