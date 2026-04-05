@@ -234,13 +234,11 @@ function startExam(){
   tampil();
 }
 
-
-// ================= TAMPIL =================
 function tampil(){
   let q = soal[index];
-
   let html = `<h3>${index+1}. ${q.q}</h3>`;
 
+  // ================= ESSAY =================
   if(q.type === "essay"){
     html += `
       <textarea 
@@ -250,7 +248,10 @@ function tampil(){
         oninput="jawabEssay(this.value)"
       >${jawaban[index] || ""}</textarea>
     `;
-  } else {
+  } 
+  
+  // ================= PG =================
+  else if(q.a && Array.isArray(q.a)){
     q.a.forEach((opsi,i)=>{
       html += `
         <label>
@@ -263,9 +264,14 @@ function tampil(){
     });
   }
 
+  // ================= FALLBACK (ANTI BLANK) =================
+  else {
+    html += `<p style="color:red">Soal tidak valid</p>`;
+    console.log("ERROR SOAL:", q);
+  }
+
   document.getElementById("question").innerHTML = html;
 }
-
 
 // ================= JAWAB =================
 function jawab(i){
