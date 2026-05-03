@@ -1,0 +1,1682 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulasi OSN IPA SD 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Exo+2:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060a14;
+    --surface: #0d1526;
+    --surface2: #111e35;
+    --border: #1e3a5f;
+    --accent: #00d4ff;
+    --accent2: #7c3aed;
+    --accent3: #f59e0b;
+    --correct: #10b981;
+    --wrong: #ef4444;
+    --text: #e2e8f0;
+    --muted: #64748b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Exo 2', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Starfield */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(0,212,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 80%, rgba(124,58,237,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 40%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 60%, rgba(0,212,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 10%, rgba(124,58,237,0.3) 0%, transparent 100%),
+      radial-gradient(2px 2px at 20% 50%, rgba(255,255,255,0.15) 0%, transparent 100%),
+      radial-gradient(1px 1px at 80% 90%, rgba(0,212,255,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 70%, rgba(255,255,255,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 40% 30%, rgba(124,58,237,0.25) 0%, transparent 100%),
+      radial-gradient(2px 2px at 15% 85%, rgba(0,212,255,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 35%, rgba(255,255,255,0.15) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 15%, rgba(124,58,237,0.2) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 20px; }
+
+  /* ============ SPLASH SCREEN ============ */
+  #splash {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .splash-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(124,58,237,0.15));
+    border: 1px solid rgba(0,212,255,0.4);
+    border-radius: 99px;
+    padding: 6px 18px;
+    font-size: 0.75rem;
+    font-family: 'Space Mono', monospace;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    animation: fadeSlide 0.8s ease both;
+  }
+
+  .splash-title {
+    font-size: clamp(2.4rem, 7vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff 0%, var(--accent) 50%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeSlide 0.8s 0.1s ease both;
+  }
+
+  .splash-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    margin-bottom: 48px;
+    animation: fadeSlide 0.8s 0.2s ease both;
+    max-width: 500px;
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+    animation: fadeSlide 0.8s 0.3s ease both;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 28px;
+    text-align: center;
+    min-width: 120px;
+  }
+
+  .stat-card .num {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+  }
+
+  .stat-card .lbl {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 48px;
+    text-align: left;
+    width: 100%;
+    max-width: 680px;
+    animation: fadeSlide 0.8s 0.4s ease both;
+  }
+
+  .topic-pill {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 0.82rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text);
+  }
+
+  .topic-pill .icon { font-size: 1.2rem; }
+
+  .btn-start {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none;
+    border-radius: 14px;
+    padding: 18px 52px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-family: 'Exo 2', sans-serif;
+    color: #fff;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: fadeSlide 0.8s 0.5s ease both;
+    box-shadow: 0 0 40px rgba(0,212,255,0.3);
+  }
+
+  .btn-start:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 50px rgba(0,212,255,0.45);
+  }
+
+  /* ============ QUIZ SCREEN ============ */
+  #quiz { display: none; }
+
+  .quiz-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .q-counter {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .q-counter span { color: var(--accent); font-weight: 700; }
+
+  .timer-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 20px;
+    font-family: 'Space Mono', monospace;
+    font-size: 1.1rem;
+    color: var(--accent);
+    min-width: 100px;
+    text-align: center;
+    transition: color 0.3s;
+  }
+
+  .timer-box.urgent { color: var(--wrong); border-color: var(--wrong); animation: pulse 0.8s infinite; }
+
+  .score-display {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+  }
+
+  .score-display span { color: var(--correct); font-weight: 700; }
+
+  /* Progress bar */
+  .progress-bar {
+    width: 100%;
+    height: 5px;
+    background: var(--surface2);
+    border-radius: 99px;
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 99px;
+    transition: width 0.5s ease;
+  }
+
+  /* Topic tag */
+  .topic-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0,212,255,0.1);
+    border: 1px solid rgba(0,212,255,0.3);
+    border-radius: 99px;
+    padding: 4px 14px;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* Question card */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 32px;
+    margin-bottom: 20px;
+    animation: cardIn 0.4s ease;
+  }
+
+  .q-text {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .q-image {
+    width: 100%;
+    max-width: 380px;
+    margin: 16px 0;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+
+  /* Options */
+  .options-grid {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .option-btn {
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transition: border-color 0.2s, background 0.2s, transform 0.1s;
+    color: var(--text);
+    font-size: 0.95rem;
+    font-family: 'Exo 2', sans-serif;
+    line-height: 1.5;
+    width: 100%;
+  }
+
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: rgba(0,212,255,0.07);
+    transform: translateX(4px);
+  }
+
+  .option-btn:disabled { cursor: default; }
+
+  .option-btn.selected { border-color: var(--accent); background: rgba(0,212,255,0.12); }
+  .option-btn.correct  { border-color: var(--correct); background: rgba(16,185,129,0.15); color: #fff; }
+  .option-btn.wrong    { border-color: var(--wrong);   background: rgba(239,68,68,0.12);  color: #fff; }
+
+  .opt-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.07);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .option-btn.correct .opt-label { background: var(--correct); border-color: var(--correct); }
+  .option-btn.wrong .opt-label   { background: var(--wrong);   border-color: var(--wrong); }
+
+  /* Explanation */
+  .explanation {
+    background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(0,212,255,0.05));
+    border: 1px solid rgba(16,185,129,0.3);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-top: 16px;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #a7f3d0;
+    display: none;
+  }
+
+  .explanation.show { display: block; animation: fadeSlide 0.3s ease; }
+  .explanation strong { color: var(--correct); }
+
+  .explanation.wrong-exp {
+    background: linear-gradient(135deg, rgba(239,68,68,0.08), rgba(245,158,11,0.05));
+    border-color: rgba(239,68,68,0.3);
+    color: #fca5a5;
+  }
+
+  .explanation.wrong-exp strong { color: var(--accent3); }
+
+  /* Bottom nav */
+  .quiz-nav {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-nav {
+    padding: 12px 28px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-nav:hover { border-color: var(--accent); color: var(--accent); }
+
+  .btn-next {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none;
+    border-radius: 10px;
+    padding: 12px 32px;
+    color: #fff;
+    font-weight: 700;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+    display: none;
+  }
+
+  .btn-next:hover { transform: translateY(-2px); }
+  .btn-next.show { display: inline-block; }
+
+  /* ============ RESULT SCREEN ============ */
+  #result { display: none; }
+
+  .result-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 48px 40px;
+    text-align: center;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .result-card::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(0,212,255,0.15), transparent 70%);
+    border-radius: 50%;
+  }
+
+  .result-emoji { font-size: 4rem; margin-bottom: 16px; }
+
+  .result-grade {
+    font-size: clamp(3rem, 10vw, 5.5rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-family: 'Space Mono', monospace;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .result-label {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .result-sub { font-size: 0.95rem; color: var(--muted); margin-bottom: 36px; }
+
+  .result-stats {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .res-stat {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 24px;
+    text-align: center;
+    min-width: 110px;
+  }
+
+  .res-stat .v {
+    font-size: 1.8rem;
+    font-weight: 800;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .res-stat .k { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+  .res-stat.correct .v { color: var(--correct); }
+  .res-stat.wrong .v   { color: var(--wrong); }
+  .res-stat.time .v    { color: var(--accent3); }
+  .res-stat.skip .v    { color: var(--muted); }
+
+  /* Review table */
+  .review-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  .review-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+
+  .review-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .review-item .ri-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    min-width: 24px;
+    margin-top: 2px;
+  }
+
+  .review-item .ri-body { flex: 1; }
+  .review-item .ri-q { font-size: 0.88rem; margin-bottom: 6px; color: var(--text); line-height: 1.4; }
+  .review-item .ri-ans { font-size: 0.8rem; }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border-radius: 99px;
+    padding: 2px 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+
+  .pill.c { background: rgba(16,185,129,0.2); color: var(--correct); }
+  .pill.w { background: rgba(239,68,68,0.2);  color: var(--wrong); }
+  .pill.s { background: rgba(100,116,139,0.2); color: var(--muted); }
+
+  .btn-retry {
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    border: none;
+    border-radius: 12px;
+    padding: 16px 44px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'Exo 2', sans-serif;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: block;
+    margin: 0 auto 12px;
+    box-shadow: 0 0 30px rgba(124,58,237,0.3);
+  }
+
+  .btn-retry:hover { transform: translateY(-3px); box-shadow: 0 8px 40px rgba(124,58,237,0.5); }
+
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  .glow-text { text-shadow: 0 0 20px rgba(0,212,255,0.5); }
+
+  @media (max-width: 600px) {
+    .q-card { padding: 22px 18px; }
+    .result-card { padding: 32px 20px; }
+    .quiz-header { flex-direction: column; align-items: flex-start; }
+  }
+
+  .difficulty-badge {
+    font-size: 0.65rem;
+    border-radius: 99px;
+    padding: 2px 10px;
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+
+  .diff-mudah   { background: rgba(16,185,129,0.2); color: var(--correct); }
+  .diff-sedang  { background: rgba(245,158,11,0.2); color: var(--accent3); }
+  .diff-sulit   { background: rgba(239,68,68,0.2);  color: var(--wrong); }
+
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin: 12px 0;
+    background: var(--surface2);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  table.data-table th {
+    background: rgba(0,212,255,0.12);
+    color: var(--accent);
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  table.data-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(30,58,95,0.5);
+    color: var(--text);
+  }
+
+  .mode-select {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    animation: fadeSlide 0.8s 0.35s ease both;
+  }
+
+  .mode-btn {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 24px;
+    cursor: pointer;
+    color: var(--text);
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    text-align: center;
+    min-width: 150px;
+  }
+
+  .mode-btn:hover, .mode-btn.active {
+    border-color: var(--accent);
+    background: rgba(0,212,255,0.1);
+    color: var(--accent);
+  }
+
+  .mode-btn .m-icon { font-size: 1.6rem; display: block; margin-bottom: 6px; }
+  .mode-btn .m-title { font-weight: 700; }
+  .mode-btn .m-desc { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<!-- ========== SPLASH ========== -->
+<div id="splash">
+  <div style="width:100%;max-width:780px;margin:0 auto;text-align:center;">
+    <div class="splash-badge">⚗️ Pusat Prestasi Nasional · OSN 2026</div>
+    <h1 class="splash-title">Simulasi OSN<br>IPA SD 2026</h1>
+    <p class="splash-sub">Uji kemampuan sains kamu dengan soal-soal berkualitas olimpiade yang mencakup seluruh topik silabus OSN 2026</p>
+
+    <div class="stats-row">
+      <div class="stat-card"><div class="num">55</div><div class="lbl">Soal</div></div>
+      <div class="stat-card"><div class="num">13</div><div class="lbl">Topik</div></div>
+      <div class="stat-card"><div class="num">90</div><div class="lbl">Menit</div></div>
+    </div>
+
+    <div class="topic-grid" style="margin:0 auto 36px;">
+      <div class="topic-pill"><span class="icon">🔬</span> Metode Ilmiah</div>
+      <div class="topic-pill"><span class="icon">🌿</span> Keanekaragaman Hayati</div>
+      <div class="topic-pill"><span class="icon">🧬</span> Proses Makhluk Hidup</div>
+      <div class="topic-pill"><span class="icon">🌍</span> Ekologi & Lingkungan</div>
+      <div class="topic-pill"><span class="icon">🏥</span> Isu Kesehatan & Teknologi</div>
+      <div class="topic-pill"><span class="icon">⚙️</span> Mekanika</div>
+      <div class="topic-pill"><span class="icon">💧</span> Wujud Benda</div>
+      <div class="topic-pill"><span class="icon">⚡</span> Listrik & Magnet</div>
+      <div class="topic-pill"><span class="icon">🌊</span> Gelombang & Optik</div>
+      <div class="topic-pill"><span class="icon">🌡️</span> Suhu & Kalor</div>
+      <div class="topic-pill"><span class="icon">🔋</span> Energi & Perubahannya</div>
+      <div class="topic-pill"><span class="icon">🪐</span> Bumi, Tata Surya & Antariksa</div>
+    </div>
+
+    <div class="mode-select">
+      <div class="mode-btn active" onclick="selectMode(this,'full')" data-mode="full">
+        <span class="m-icon">📝</span>
+        <div class="m-title">Mode Ujian</div>
+        <div class="m-desc">55 soal · 90 menit · tanpa pembahasan langsung</div>
+      </div>
+      <div class="mode-btn" onclick="selectMode(this,'practice')" data-mode="practice">
+        <span class="m-icon">🎯</span>
+        <div class="m-title">Mode Latihan</div>
+        <div class="m-desc">Pembahasan langsung setelah menjawab</div>
+      </div>
+    </div>
+
+    <button class="btn-start" onclick="startQuiz()">Mulai Simulasi 🚀</button>
+  </div>
+</div>
+
+<!-- ========== QUIZ ========== -->
+<div id="quiz">
+  <div class="container">
+    <div class="quiz-header">
+      <div class="q-counter">Soal <span id="qNum">1</span> / <span id="qTotal">55</span></div>
+      <div class="timer-box" id="timer">90:00</div>
+      <div class="score-display">Benar: <span id="scoreDisplay">0</span></div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+    <div class="topic-tag" id="topicTag">🔬 Metode Ilmiah</div>
+
+    <div class="q-card">
+      <div class="q-text" id="questionText"></div>
+      <div id="questionExtra"></div>
+    </div>
+
+    <div class="options-grid" id="optionsGrid"></div>
+    <div class="explanation" id="explanationBox"></div>
+
+    <div class="quiz-nav">
+      <button class="btn-nav" onclick="skipQuestion()">Lewati ⏭</button>
+      <button class="btn-next show" id="btnNext" onclick="nextQuestion()" style="display:none">Berikutnya →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== RESULT ========== -->
+<div id="result">
+  <div class="container">
+    <div class="result-card">
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <div class="result-grade" id="resultGrade">85</div>
+      <div class="result-label" id="resultLabel">Sangat Baik!</div>
+      <div class="result-sub" id="resultSub">Kamu layak masuk babak selanjutnya</div>
+      <div class="result-stats">
+        <div class="res-stat correct"><div class="v" id="resCorrect">0</div><div class="k">✅ Benar</div></div>
+        <div class="res-stat wrong"><div class="v" id="resWrong">0</div><div class="k">❌ Salah</div></div>
+        <div class="res-stat skip"><div class="v" id="resSkip">0</div><div class="k">⏭ Dilewati</div></div>
+        <div class="res-stat time"><div class="v" id="resTime">--:--</div><div class="k">⏱ Waktu</div></div>
+      </div>
+    </div>
+
+    <div class="review-title">📋 Review Jawaban</div>
+    <div class="review-list" id="reviewList"></div>
+
+    <button class="btn-retry" onclick="retryQuiz()">🔄 Coba Lagi</button>
+    <button class="btn-retry" style="background:linear-gradient(135deg,#1e3a5f,#0d1526);border:1px solid var(--border);box-shadow:none;" onclick="backToHome()">🏠 Kembali ke Menu</button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// SOAL DATABASE — 55 soal OSN IPA SD 2026
+// ============================================================
+const SOAL = [
+  // ── METODE ILMIAH ──────────────────────────────────────────
+  {
+    topic: "🔬 Metode Ilmiah",
+    difficulty: "mudah",
+    q: "Dina ingin mengetahui apakah jenis pupuk mempengaruhi pertumbuhan tanaman cabai. Ia menanam 3 kelompok cabai dengan pupuk berbeda (pupuk kandang, pupuk kimia, tanpa pupuk). Semua kelompok mendapatkan air dan cahaya yang sama. Variabel bebas dalam percobaan ini adalah …",
+    opts: ["Pertumbuhan tanaman cabai", "Jenis pupuk yang digunakan", "Jumlah air yang diberikan", "Intensitas cahaya matahari"],
+    ans: 1,
+    exp: "Variabel bebas adalah variabel yang SENGAJA diubah oleh peneliti untuk melihat pengaruhnya. Dalam percobaan ini, Dina sengaja mengubah jenis pupuk, sehingga jenis pupuk adalah variabel bebas. Pertumbuhan tanaman adalah variabel terikat (yang diukur/diamati)."
+  },
+  {
+    topic: "🔬 Metode Ilmiah",
+    difficulty: "sedang",
+    q: "Rivan melakukan percobaan dengan memasukkan tanaman air ke dalam 3 toples berbeda yang diletakkan di bawah cahaya dengan intensitas berbeda (gelap, remang, terang). Ia menghitung jumlah gelembung yang keluar per menit. Setelah 30 menit, ia mencatat hasilnya. Manakah pernyataan yang BENAR tentang metode ilmiah dalam percobaan tersebut?",
+    opts: [
+      "Variabel terikat adalah intensitas cahaya",
+      "Percobaan ini tidak perlu diulang karena sudah cukup 30 menit",
+      "Hipotesis yang tepat: 'Semakin terang cahaya, semakin banyak gelembung yang dihasilkan'",
+      "Toples gelap tidak diperlukan dalam percobaan ini"
+    ],
+    ans: 2,
+    exp: "Hipotesis adalah dugaan sementara yang dapat diuji. Hipotesis yang baik menyatakan hubungan sebab-akibat antara variabel bebas (intensitas cahaya) dan variabel terikat (jumlah gelembung). 'Semakin terang cahaya, semakin banyak gelembung' adalah hipotesis yang valid dan dapat diuji. Toples gelap adalah kelompok kontrol (pembanding)."
+  },
+  {
+    topic: "🔬 Metode Ilmiah",
+    difficulty: "sulit",
+    q: "Seorang siswa mengamati bahwa tanaman di sudut ruangan tumbuh lebih lambat daripada tanaman di dekat jendela. Ia lalu merancang percobaan untuk membuktikan hal ini. Langkah pertama yang paling tepat dalam metode ilmiah setelah observasi adalah …",
+    opts: ["Langsung melakukan percobaan", "Merumuskan hipotesis", "Mengumpulkan data dari internet", "Membuat laporan hasil"],
+    ans: 1,
+    exp: "Urutan metode ilmiah: (1) Observasi → (2) Merumuskan masalah → (3) Merumuskan hipotesis → (4) Merancang percobaan → (5) Melakukan percobaan → (6) Mengumpulkan data → (7) Menganalisis data → (8) Menarik kesimpulan. Setelah observasi, langkah berikutnya adalah merumuskan masalah/hipotesis."
+  },
+
+  // ── KEANEKARAGAMAN HAYATI ───────────────────────────────────
+  {
+    topic: "🌿 Keanekaragaman Hayati",
+    difficulty: "mudah",
+    q: "Perhatikan daftar makhluk hidup berikut: (1) Amoeba, (2) Bakteri, (3) Jamur, (4) Kucing, (5) Padi. Makhluk hidup yang termasuk kingdom Monera adalah …",
+    opts: ["(1) dan (2)", "(2) saja", "(3) dan (5)", "(1) dan (3)"],
+    ans: 1,
+    exp: "Kingdom Monera terdiri dari organisme prokariotik (tidak memiliki membran inti sel), yaitu Bakteri (termasuk Cyanobacteria). Amoeba termasuk Protista (eukariotik), Jamur termasuk Fungi, Kucing termasuk Animalia, dan Padi termasuk Plantae."
+  },
+  {
+    topic: "🌿 Keanekaragaman Hayati",
+    difficulty: "sedang",
+    q: "Cicak dan buaya memiliki nenek moyang yang sama. Keduanya berdarah dingin dan berkulit bersisik. Namun, buaya jauh lebih besar. Pengelompokan organisme berdasarkan persamaan ciri-ciri yang dimiliki disebut …",
+    opts: ["Taksonomi", "Morfologi", "Klasifikasi", "Identifikasi"],
+    ans: 2,
+    exp: "Klasifikasi adalah proses pengelompokan makhluk hidup berdasarkan persamaan ciri-ciri yang dimiliki. Taksonomi adalah ilmu yang mempelajari penggolongan makhluk hidup. Dalam klasifikasi, cicak dan buaya dikelompokkan dalam kelas Reptilia karena memiliki ciri-ciri yang sama: berdarah dingin, bersisik, bertelur."
+  },
+  {
+    topic: "🌿 Keanekaragaman Hayati",
+    difficulty: "sedang",
+    q: "Beruang madu (Helarctos malayanus) adalah satwa endemik yang banyak ditemukan di Kalimantan dan Sumatera. Kata 'endemik' berarti …",
+    opts: [
+      "Satwa yang hampir punah",
+      "Satwa yang hanya ditemukan di daerah tertentu",
+      "Satwa yang dilindungi pemerintah",
+      "Satwa yang dapat hidup di berbagai habitat"
+    ],
+    ans: 1,
+    exp: "Endemik berarti suatu organisme yang hanya ditemukan di suatu wilayah geografis tertentu dan tidak ditemukan di tempat lain di dunia secara alami. Beruang madu adalah hewan endemik Asia Tenggara, khususnya di hutan-hutan Kalimantan dan Sumatera."
+  },
+  {
+    topic: "🌿 Keanekaragaman Hayati",
+    difficulty: "sulit",
+    q: "Urutan takson dari yang paling tinggi ke yang paling rendah dalam klasifikasi makhluk hidup adalah …",
+    opts: [
+      "Kingdom – Filum – Kelas – Ordo – Famili – Genus – Spesies",
+      "Kingdom – Filum – Ordo – Kelas – Famili – Genus – Spesies",
+      "Kingdom – Kelas – Filum – Ordo – Famili – Genus – Spesies",
+      "Spesies – Genus – Famili – Ordo – Kelas – Filum – Kingdom"
+    ],
+    ans: 0,
+    exp: "Urutan takson dari tertinggi ke terendah: Kingdom → Filum (Divisi) → Kelas → Ordo → Famili → Genus → Spesies. Cara mudah mengingat: 'Kita Perlu Cari Orang Famili Guna Selamat'."
+  },
+
+  // ── PROSES MAKHLUK HIDUP ────────────────────────────────────
+  {
+    topic: "🧬 Proses Makhluk Hidup",
+    difficulty: "mudah",
+    q: "Saat olahraga, kita berkeringat dan napas menjadi lebih cepat. Hal ini menunjukkan bahwa tubuh sedang melakukan …",
+    opts: ["Fotosintesis yang meningkat", "Respirasi yang lebih aktif untuk menghasilkan energi", "Proses pencernaan yang dipercepat", "Ekskresi melalui kulit saja"],
+    ans: 1,
+    exp: "Saat olahraga, otot membutuhkan lebih banyak energi (ATP). Energi dihasilkan melalui respirasi seluler: Glukosa + O₂ → CO₂ + H₂O + Energi. Pernapasan cepat untuk memasok lebih banyak O₂ dan membuang CO₂ berlebih. Berkeringat untuk mengatur suhu tubuh."
+  },
+  {
+    topic: "🧬 Proses Makhluk Hidup",
+    difficulty: "sedang",
+    q: "Perhatikan persamaan fotosintesis berikut:\n6CO₂ + 6H₂O + Cahaya → C₆H₁₂O₆ + 6O₂\n\nJika klorofil pada daun rusak akibat kekurangan magnesium, apa yang paling mungkin terjadi?",
+    opts: [
+      "Tanaman menghasilkan lebih banyak oksigen",
+      "Tanaman tidak dapat menyerap air dari tanah",
+      "Laju fotosintesis menurun karena klorofil tidak terbentuk sempurna",
+      "Tanaman menghasilkan lebih banyak glukosa"
+    ],
+    ans: 2,
+    exp: "Klorofil adalah pigmen hijau yang berperan menangkap energi cahaya untuk fotosintesis. Magnesium adalah komponen utama pembentuk klorofil. Jika magnesium kurang → klorofil tidak terbentuk sempurna → daun menguning (klorosis) → fotosintesis menurun → produksi glukosa dan oksigen berkurang."
+  },
+  {
+    topic: "🧬 Proses Makhluk Hidup",
+    difficulty: "sedang",
+    q: "Pada sistem pencernaan manusia, pencernaan protein secara kimiawi pertama kali terjadi di …",
+    opts: ["Mulut", "Lambung", "Usus halus", "Usus besar"],
+    ans: 1,
+    exp: "Pencernaan protein secara kimiawi dimulai di lambung, bukan di mulut. Di lambung, enzim pepsin (diaktifkan oleh asam HCl) memecah protein menjadi pepton. Di mulut, hanya terjadi pencernaan karbohidrat (enzim amilase/ptialin). Di usus halus, pencernaan protein dilanjutkan oleh enzim tripsin dan kimotripsin."
+  },
+  {
+    topic: "🧬 Proses Makhluk Hidup",
+    difficulty: "sedang",
+    q: "Kupu-kupu mengalami metamorfosis sempurna. Urutan tahapan metamorfosis sempurna yang benar adalah …",
+    opts: [
+      "Telur → Larva → Pupa → Imago",
+      "Telur → Nimfa → Imago",
+      "Telur → Pupa → Larva → Imago",
+      "Telur → Ulat → Imago"
+    ],
+    ans: 0,
+    exp: "Metamorfosis sempurna (holometabola) memiliki 4 tahap: Telur → Larva (ulat) → Pupa (kepompong) → Imago (dewasa/kupu-kupu). Metamorfosis tidak sempurna (hemimetabola) hanya memiliki 3 tahap: Telur → Nimfa → Imago (contoh: belalang, jangkrik)."
+  },
+  {
+    topic: "🧬 Proses Makhluk Hidup",
+    difficulty: "sulit",
+    q: "Tekanan darah sistolik adalah tekanan darah ketika …",
+    opts: [
+      "Jantung mengembang dan darah masuk ke jantung",
+      "Jantung mengempis dan darah keluar dari jantung",
+      "Otot jantung berelaksasi dan darah keluar",
+      "Darah mengalir perlahan di pembuluh kapiler"
+    ],
+    ans: 1,
+    exp: "Tekanan darah terdiri dari dua nilai: Sistolik (angka atas) = tekanan ketika jantung berkontraksi/mengempis → darah dipompa keluar dari jantung. Diastolik (angka bawah) = tekanan ketika jantung berelaksasi/mengembang → darah masuk ke jantung. Contoh: 120/80 mmHg → sistolik 120, diastolik 80."
+  },
+  {
+    topic: "🧬 Proses Makhluk Hidup",
+    difficulty: "sulit",
+    q: "Seorang anak berusia 8 tahun mengalami gangguan berupa urine yang sangat encer dan banyak, namun kadar gula darahnya normal. Gangguan ini kemungkinan terjadi pada …",
+    opts: [
+      "Pankreas yang tidak memproduksi insulin cukup",
+      "Hormon ADH yang kurang menyebabkan reabsorpsi air terganggu",
+      "Ginjal yang tidak mampu menyaring glukosa",
+      "Lambung yang terlalu banyak memproduksi asam"
+    ],
+    ans: 1,
+    exp: "Gejala urine encer dan banyak tanpa gula darah tinggi menunjukkan Diabetes Insipidus (bukan Diabetes Mellitus). Pada diabetes insipidus, hormon ADH (Anti-Diuretic Hormone) tidak diproduksi cukup oleh kelenjar hipofisis → ginjal tidak bisa mereabsorpsi air → urine sangat banyak dan encer. Berbeda dengan diabetes mellitus yang disebabkan kekurangan insulin."
+  },
+
+  // ── EKOLOGI & LINGKUNGAN ────────────────────────────────────
+  {
+    topic: "🌍 Ekologi & Lingkungan",
+    difficulty: "mudah",
+    q: "Dalam suatu ekosistem sawah terdapat: padi, belalang, katak, ular, dan elang. Manakah yang merupakan rantai makanan yang BENAR?",
+    opts: [
+      "Elang → Ular → Katak → Belalang → Padi",
+      "Padi → Belalang → Katak → Ular → Elang",
+      "Padi → Katak → Belalang → Ular → Elang",
+      "Belalang → Padi → Katak → Ular → Elang"
+    ],
+    ans: 1,
+    exp: "Rantai makanan menunjukkan aliran energi dari produsen ke konsumen. Padi (produsen) → Belalang (konsumen I/herbivora) → Katak (konsumen II/karnivora) → Ular (konsumen III) → Elang (konsumen IV/puncak). Tanda panah menunjukkan 'dimakan oleh'."
+  },
+  {
+    topic: "🌍 Ekologi & Lingkungan",
+    difficulty: "sedang",
+    q: "Hubungan antara bunga Rafflesia arnoldii dengan tumbuhan inang (tetrastigma) adalah contoh simbiosis …",
+    opts: ["Mutualisme (keduanya untung)", "Komensalisme (satu untung, satu tidak terpengaruh)", "Parasitisme (satu untung, satu rugi)", "Amensalisme (satu rugi, satu tidak terpengaruh)"],
+    ans: 2,
+    exp: "Rafflesia arnoldii adalah tumbuhan parasit yang tidak memiliki akar, batang, dan daun sejati. Ia hidup sepenuhnya bergantung pada tumbuhan inang (tetrastigma) untuk mendapatkan air dan nutrisi. Rafflesia UNTUNG mendapat nutrisi, tetrastigma RUGI karena nutrisinya diserap. Ini adalah parasitisme."
+  },
+  {
+    topic: "🌍 Ekologi & Lingkungan",
+    difficulty: "sedang",
+    q: "Jika populasi katak di suatu sawah tiba-tiba berkurang drastis akibat perburuan, maka yang paling mungkin terjadi adalah …",
+    opts: [
+      "Populasi ular meningkat dan populasi belalang menurun",
+      "Populasi belalang meningkat dan populasi ular menurun",
+      "Populasi padi meningkat dan populasi elang meningkat",
+      "Tidak ada perubahan pada organisme lain"
+    ],
+    ans: 1,
+    exp: "Rantai makanan: Padi → Belalang → Katak → Ular → Elang. Jika katak berkurang: (1) Belalang tidak ada pemangsa → populasi MENINGKAT. (2) Ular tidak ada mangsa → populasi MENURUN. (3) Padi habis dimakan belalang → populasi MENURUN. Ini disebut efek kaskade trofik."
+  },
+  {
+    topic: "🌍 Ekologi & Lingkungan",
+    difficulty: "sulit",
+    q: "Fenomena eutrofikasi pada danau terjadi ketika …",
+    opts: [
+      "Air danau menjadi terlalu asam akibat hujan asam",
+      "Pupuk berlebih dari pertanian menyebabkan ledakan pertumbuhan alga sehingga oksigen terlarut menurun",
+      "Predator puncak di danau berkurang sehingga ikan kecil meledak",
+      "Suhu air danau meningkat akibat perubahan iklim global"
+    ],
+    ans: 1,
+    exp: "Eutrofikasi: Pupuk berlebih (nitrat, fosfat) mengalir ke danau → alga tumbuh sangat lebat (blooming) → saat alga mati, bakteri pengurai membutuhkan banyak O₂ → oksigen terlarut dalam air menurun drastis → ikan dan organisme air mati kehabisan oksigen (kondisi hipoksia/anoksia)."
+  },
+  {
+    topic: "🌍 Ekologi & Lingkungan",
+    difficulty: "sedang",
+    q: "Adaptasi morfologi adalah penyesuaian diri makhluk hidup berdasarkan bentuk atau struktur tubuhnya. Contoh adaptasi morfologi yang TEPAT adalah …",
+    opts: [
+      "Bunglon mengubah warna tubuhnya sesuai lingkungan",
+      "Unta menyimpan lemak di punuknya untuk cadangan energi di gurun",
+      "Kelelawar menggunakan echolocation untuk navigasi di malam hari",
+      "Burung bermigrasi ke daerah hangat saat musim dingin"
+    ],
+    ans: 1,
+    exp: "Adaptasi morfologi = bentuk fisik/struktur tubuh. Punuk unta (tempat menyimpan lemak) adalah adaptasi MORFOLOGI. Bunglon mengubah warna = adaptasi FISIOLOGI (proses tubuh). Echolocation kelelawar = adaptasi FISIOLOGI. Burung bermigrasi = adaptasi TINGKAH LAKU."
+  },
+
+  // ── ISU KESEHATAN & TEKNOLOGI ───────────────────────────────
+  {
+    topic: "🏥 Isu Kesehatan & Teknologi",
+    difficulty: "mudah",
+    q: "Proses pembuatan tempe dari kedelai melibatkan mikroorganisme. Mikroorganisme yang berperan dalam fermentasi kedelai menjadi tempe adalah …",
+    opts: ["Saccharomyces cerevisiae", "Rhizopus oligosporus", "Lactobacillus bulgaricus", "Acetobacter xylinum"],
+    ans: 1,
+    exp: "Rhizopus oligosporus adalah jamur yang digunakan dalam pembuatan tempe. Ia mengurai protein kedelai menjadi lebih mudah dicerna. Saccharomyces cerevisiae → roti dan bir. Lactobacillus bulgaricus → yogurt. Acetobacter xylinum → nata de coco."
+  },
+  {
+    topic: "🏥 Isu Kesehatan & Teknologi",
+    difficulty: "sedang",
+    q: "Vaksin bekerja dengan cara …",
+    opts: [
+      "Membunuh semua bakteri dan virus dalam tubuh",
+      "Merangsang sistem imun untuk membentuk antibodi tanpa menyebabkan penyakit",
+      "Mempercepat pemulihan saat sudah terkena penyakit",
+      "Menggantikan sel-sel tubuh yang rusak akibat infeksi"
+    ],
+    ans: 1,
+    exp: "Vaksin mengandung antigen (patogen yang dilemahkan/dimatikan atau bagian dari patogen). Ketika divaksinasi, sistem imun 'belajar' mengenali antigen tersebut dan membentuk antibodi serta sel memori. Jika kelak terpapar patogen asli, tubuh sudah siap melawan dengan cepat. Ini adalah imunitas aktif."
+  },
+  {
+    topic: "🏥 Isu Kesehatan & Teknologi",
+    difficulty: "sedang",
+    q: "Kloning adalah teknologi bioteknologi modern yang bertujuan untuk …",
+    opts: [
+      "Menghasilkan individu baru melalui perkawinan silang",
+      "Menghasilkan individu baru yang identik secara genetik dengan induknya",
+      "Mempercepat pembelahan sel secara kimiawi",
+      "Mengubah susunan DNA organisme agar lebih kuat"
+    ],
+    ans: 1,
+    exp: "Kloning adalah proses menghasilkan individu baru yang memiliki susunan genetik (DNA) yang IDENTIK dengan induknya. Kloning dilakukan dengan mengambil inti sel tubuh dan memasukkannya ke dalam sel telur yang telah dikosongkan intinya. Domba Dolly (1996) adalah mamalia pertama yang berhasil dikloning."
+  },
+
+  // ── MEKANIKA ────────────────────────────────────────────────
+  {
+    topic: "⚙️ Mekanika",
+    difficulty: "mudah",
+    q: "Sebuah bola ditendang sehingga bergerak, kemudian melambat dan berhenti. Penyebab bola berhenti adalah …",
+    opts: ["Gaya otot yang berkurang", "Gaya gesek antara bola dan lantai", "Gravitasi yang menarik bola ke bawah", "Tidak ada gaya yang bekerja"],
+    ans: 1,
+    exp: "Setelah bola ditendang, tidak ada lagi gaya dorong. Gaya gesek antara permukaan bola dan lantai berlawanan arah dengan gerak bola, menyebabkan bola melambat hingga berhenti. Tanpa gaya gesek (di ruang hampa), bola akan terus bergerak selamanya (Hukum Newton I)."
+  },
+  {
+    topic: "⚙️ Mekanika",
+    difficulty: "sedang",
+    q: "Seorang anak mendorong gerobak bermassa 20 kg dengan gaya 100 N. Jika gaya gesek yang bekerja adalah 40 N, berapakah percepatan gerobak tersebut? (F = m × a)",
+    opts: ["2 m/s²", "3 m/s²", "5 m/s²", "7 m/s²"],
+    ans: 1,
+    exp: "Gaya neto = Gaya dorong – Gaya gesek = 100 N – 40 N = 60 N. Menggunakan Hukum Newton II: F = m × a → a = F/m = 60 N / 20 kg = 3 m/s². Percepatan gerobak adalah 3 m/s²."
+  },
+  {
+    topic: "⚙️ Mekanika",
+    difficulty: "sedang",
+    q: "Papan miring, baji, dan sekrup termasuk jenis pesawat sederhana berupa …",
+    opts: ["Tuas/Pengungkit", "Bidang miring", "Katrol", "Roda dan poros"],
+    ans: 1,
+    exp: "Jenis pesawat sederhana: (1) Tuas/Pengungkit: gunting, tang, jungkat-jungkit. (2) Bidang miring: papan miring, baji, sekrup, tangga. (3) Katrol: katrol tetap, katrol bergerak, katrol majemuk. (4) Roda dan poros: setir mobil, roda sepeda. Baji dan sekrup adalah modifikasi dari bidang miring."
+  },
+  {
+    topic: "⚙️ Mekanika",
+    difficulty: "sedang",
+    q: "Hukum Archimedes menyatakan bahwa benda yang tercelup dalam fluida mengalami gaya ke atas (gaya apung) yang besarnya …",
+    opts: [
+      "Sama dengan berat benda di udara",
+      "Sama dengan berat fluida yang dipindahkan oleh benda",
+      "Sama dengan volume benda yang tercelup",
+      "Bergantung pada massa jenis benda saja"
+    ],
+    ans: 1,
+    exp: "Hukum Archimedes: FA = ρ_fluida × V_tercelup × g. Gaya apung = berat fluida yang dipindahkan. Ini yang menyebabkan kapal baja bisa mengapung (walaupun lebih berat dari air) karena volume kapal yang sangat besar memindahkan banyak air, sehingga gaya apung besar."
+  },
+  {
+    topic: "⚙️ Mekanika",
+    difficulty: "sulit",
+    q: "Dongkrak hidrolik dapat mengangkat mobil dengan gaya kecil karena menggunakan prinsip Hukum Pascal. Jika luas penampang kecil 10 cm² dan luas penampang besar 500 cm², dan gaya yang diberikan pada penampang kecil adalah 200 N, berapakah gaya yang dihasilkan pada penampang besar?",
+    opts: ["1.000 N", "5.000 N", "10.000 N", "100.000 N"],
+    ans: 2,
+    exp: "Hukum Pascal: F₁/A₁ = F₂/A₂ → F₂ = F₁ × (A₂/A₁) = 200 N × (500/10) = 200 × 50 = 10.000 N. Dongkrak hidrolik melipatgandakan gaya berdasarkan perbandingan luas penampang. Itulah mengapa dongkrak kecil bisa mengangkat mobil yang sangat berat."
+  },
+  {
+    topic: "⚙️ Mekanika",
+    difficulty: "sulit",
+    q: "Saat roket meluncur ke atas, gas panas disemprotkan ke bawah dengan kecepatan tinggi. Hal ini sesuai dengan Hukum Newton …",
+    opts: ["I (Inersia)", "II (F = m × a)", "III (Aksi-Reaksi)", "Semua hukum Newton berlaku"],
+    ans: 2,
+    exp: "Hukum Newton III: Setiap aksi menimbulkan reaksi yang sama besar namun berlawanan arah. Roket mendorong gas ke bawah (AKSI), gas mendorong roket ke atas (REAKSI). Contoh lain: tangan mendorong dinding, dinding mendorong tangan kembali."
+  },
+
+  // ── WUJUD BENDA ─────────────────────────────────────────────
+  {
+    topic: "💧 Wujud Benda",
+    difficulty: "mudah",
+    q: "Garam dapur terbuat dari natrium (Na) dan klorida (Cl). Dalam kehidupan sehari-hari, garam dapur tergolong …",
+    opts: ["Unsur", "Senyawa", "Campuran homogen", "Campuran heterogen"],
+    ans: 1,
+    exp: "Senyawa adalah zat tunggal yang terbentuk dari dua atau lebih unsur yang bergabung secara kimia dengan perbandingan tertentu. Garam dapur (NaCl) terdiri dari unsur Natrium (Na) dan Klorida (Cl) yang berikatan kimia → SENYAWA. Air (H₂O) dan gula (C₁₂H₂₂O₁₁) juga contoh senyawa."
+  },
+  {
+    topic: "💧 Wujud Benda",
+    difficulty: "sedang",
+    q: "Es batu dipanaskan hingga menjadi air, kemudian air dipanaskan terus menjadi uap. Perubahan wujud yang terjadi secara berurutan adalah …",
+    opts: [
+      "Membeku → Menguap",
+      "Melebur → Menguap",
+      "Menyublim → Mendidih",
+      "Mengembun → Melebur"
+    ],
+    ans: 1,
+    exp: "Es (padat) → Air (cair): MELEBUR/MENCAIR (membutuhkan kalor). Air (cair) → Uap (gas): MENGUAP (membutuhkan kalor). Perubahan wujud lainnya: Membeku = cair ke padat, Mengembun = gas ke cair, Menyublim = padat langsung ke gas (kapur barus), Deposisi/Kristalisasi = gas ke padat."
+  },
+  {
+    topic: "💧 Wujud Benda",
+    difficulty: "sedang",
+    q: "Air gula adalah contoh campuran homogen karena …",
+    opts: [
+      "Komponen-komponennya masih dapat dibedakan secara kasat mata",
+      "Komposisinya sama di setiap bagian dan tidak terlihat perbedaannya",
+      "Komponen-komponennya mudah dipisahkan dengan penyaringan",
+      "Terbentuk dari dua zat yang memiliki wujud berbeda"
+    ],
+    ans: 1,
+    exp: "Campuran homogen (larutan): komposisi seragam di seluruh bagian, tidak tampak batas antar komponen. Contoh: air gula, air garam, sirop. Campuran heterogen: komponen masih terlihat berbeda. Contoh: campuran pasir dan air, salad buah. Campuran homogen tidak dapat dipisahkan dengan penyaringan biasa."
+  },
+  {
+    topic: "💧 Wujud Benda",
+    difficulty: "sulit",
+    q: "Sebuah bahan memiliki ciri-ciri: (1) volumenya tetap, (2) bentuknya berubah sesuai wadah, (3) tidak dapat dimampatkan, (4) mengalir dari tempat tinggi ke rendah. Bahan tersebut berwujud …",
+    opts: ["Padat", "Cair", "Gas", "Plasma"],
+    ans: 1,
+    exp: "Ciri benda CAIR: volume tetap (tidak berubah), bentuk mengikuti wadah, tidak dapat dimampatkan (tidak kompresibel), mengalir dari tempat tinggi ke rendah. Benda padat: volume dan bentuk tetap. Gas: volume dan bentuk berubah, dapat dimampatkan. Plasma: wujud keempat, seperti pada matahari."
+  },
+
+  // ── LISTRIK & MAGNET ────────────────────────────────────────
+  {
+    topic: "⚡ Listrik & Magnet",
+    difficulty: "mudah",
+    q: "Dua buah magnet didekatkan. Magnet pertama memiliki kutub Utara di kiri, magnet kedua memiliki kutub Utara di kanan. Apa yang terjadi?",
+    opts: [
+      "Kedua magnet saling tarik-menarik",
+      "Kedua magnet saling tolak-menolak",
+      "Tidak ada interaksi antar magnet",
+      "Magnet kedua mengikuti magnet pertama"
+    ],
+    ans: 1,
+    exp: "Hukum Magnet: Kutub SEJENIS tolak-menolak, kutub BERBEDA tarik-menarik. Jika kutub U bertemu kutub U (sejenis) → tolak-menolak. Jika kutub U bertemu kutub S (berbeda) → tarik-menarik. Sifat ini juga berlaku pada muatan listrik: muatan sejenis tolak-menolak."
+  },
+  {
+    topic: "⚡ Listrik & Magnet",
+    difficulty: "sedang",
+    q: "Dalam rangkaian listrik paralel, jika salah satu lampu padam/putus, maka …",
+    opts: [
+      "Semua lampu lain juga padam",
+      "Lampu lain tetap menyala karena memiliki jalur arus tersendiri",
+      "Semua lampu menjadi lebih redup",
+      "Tegangan pada lampu lain berkurang setengahnya"
+    ],
+    ans: 1,
+    exp: "Pada rangkaian PARALEL, setiap komponen memiliki jalur arus (cabang) tersendiri. Jika satu cabang putus, cabang lain tetap berfungsi. Contoh: instalasi listrik rumah. Pada rangkaian SERI, semua komponen dalam satu jalur → jika satu putus, semua mati. Contoh: lampu hias pohon natal lama."
+  },
+  {
+    topic: "⚡ Listrik & Magnet",
+    difficulty: "sedang",
+    q: "Transformator step-up pada pembangkit listrik berfungsi untuk …",
+    opts: [
+      "Menaikkan tegangan listrik untuk transmisi jarak jauh",
+      "Menurunkan tegangan listrik untuk digunakan di rumah",
+      "Mengubah arus bolak-balik menjadi arus searah",
+      "Menyimpan energi listrik dalam bentuk magnet"
+    ],
+    ans: 0,
+    exp: "Transformator step-up: menaikkan tegangan (naik), menurunkan arus (turun). Digunakan di dekat pembangkit listrik untuk menaikkan tegangan (misal 500 kV) agar rugi daya (P = I²R) kecil saat transmisi jarak jauh. Transformator step-down: menurunkan tegangan untuk digunakan konsumen (220V di rumah)."
+  },
+  {
+    topic: "⚡ Listrik & Magnet",
+    difficulty: "sulit",
+    q: "Sebuah magnet batang dibungkus plastik. Pernyataan yang BENAR tentang garis-garis gaya magnet yang menembus permukaan plastik adalah …",
+    opts: [
+      "Jumlah garis yang masuk lebih besar dari yang keluar",
+      "Jumlah garis yang masuk sama dengan yang keluar",
+      "Jumlah garis yang masuk lebih kecil dari yang keluar",
+      "Tidak ada garis gaya yang menembus plastik"
+    ],
+    ans: 1,
+    exp: "Garis-garis gaya magnet adalah loop tertutup (tidak ada awal/akhir). Setiap garis yang 'masuk' ke dalam permukaan plastik pasti juga 'keluar' dari permukaan plastik. Ini dikenal sebagai Hukum Gauss untuk Magnetisme (tidak ada monopol magnet). Jumlah fluks magnetik yang masuk SELALU sama dengan yang keluar."
+  },
+
+  // ── GELOMBANG & OPTIK ───────────────────────────────────────
+  {
+    topic: "🌊 Gelombang & Optik",
+    difficulty: "mudah",
+    q: "Cahaya matahari tampak putih, namun ketika melewati prisma atau tetesan air hujan, cahaya terpecah menjadi spektrum warna pelangi. Peristiwa ini disebut …",
+    opts: ["Refleksi (pemantulan)", "Refraksi (pembiasan)", "Difraksi (pelenturan)", "Dispersi (penguraian)"],
+    ans: 3,
+    exp: "Dispersi adalah penguraian cahaya putih menjadi komponen warna-warnanya (MEJIKUHIBINIU: Merah, Jingga, Kuning, Hijau, Biru, Nila, Ungu) ketika melewati medium dispersif seperti prisma atau tetesan air. Ini terjadi karena setiap warna memiliki panjang gelombang berbeda sehingga dibiaskan dengan sudut berbeda."
+  },
+  {
+    topic: "🌊 Gelombang & Optik",
+    difficulty: "sedang",
+    q: "Seorang anak mengalami rabun jauh (miopi). Bayangan benda jauh jatuh di depan retina. Untuk melihat benda jauh dengan jelas, anak tersebut memerlukan kacamata berlensa …",
+    opts: ["Cembung (konvergen)", "Cekung (divergen)", "Silinder", "Rangkap"],
+    ans: 1,
+    exp: "Miopi (rabun jauh): bayangan jatuh di DEPAN retina. Koreksi: lensa CEKUNG (negatif/divergen) yang menyebarkan cahaya sehingga bayangan bergeser ke belakang tepat di retina. Hipermetropi (rabun dekat): bayangan jatuh di BELAKANG retina → koreksi lensa CEMBUNG (positif/konvergen)."
+  },
+  {
+    topic: "🌊 Gelombang & Optik",
+    difficulty: "sedang",
+    q: "Lumba-lumba menggunakan gelombang ultrasonik (echolocation) untuk navigasi dan berburu. Bunyi ini disebut gelombang mekanik karena …",
+    opts: [
+      "Dapat merambat tanpa medium",
+      "Memerlukan medium untuk merambat",
+      "Termasuk gelombang elektromagnetik",
+      "Hanya dapat merambat melalui udara"
+    ],
+    ans: 1,
+    exp: "Gelombang mekanik memerlukan MEDIUM (zat perantara) untuk merambat, berbeda dengan gelombang elektromagnetik (cahaya, gelombang radio) yang dapat merambat di ruang hampa. Bunyi adalah gelombang mekanik → tidak bisa merambat di ruang hampa. Echolocation lumba-lumba bekerja sangat baik di air karena air adalah medium rambat yang efisien untuk bunyi."
+  },
+  {
+    topic: "🌊 Gelombang & Optik",
+    difficulty: "sedang",
+    q: "Tali yang salah satu ujungnya diikat dan digetarkan membentuk bukit dan lembah. Arah getar tali tegak lurus terhadap arah rambat gelombang. Gelombang ini disebut gelombang …",
+    opts: ["Longitudinal", "Transversal", "Stasioner", "Elektromagnetik"],
+    ans: 1,
+    exp: "Gelombang transversal: arah getar TEGAK LURUS dengan arah rambat. Contoh: gelombang tali, gelombang cahaya, gelombang air. Gelombang longitudinal: arah getar SEJAJAR dengan arah rambat, membentuk rapatan dan regangan. Contoh: gelombang bunyi."
+  },
+  {
+    topic: "🌊 Gelombang & Optik",
+    difficulty: "sulit",
+    q: "Sebuah kapal sonar mengirimkan pulsa ultrasonik ke dasar laut. Pulsa kembali setelah 4 detik. Jika kecepatan bunyi di air laut adalah 1.500 m/s, berapakah kedalaman laut di bawah kapal tersebut?",
+    opts: ["1.500 m", "3.000 m", "6.000 m", "12.000 m"],
+    ans: 1,
+    exp: "Waktu tempuh pulsa = 4 detik (pergi dan kembali), jadi waktu untuk satu arah = 4/2 = 2 detik. Jarak = kecepatan × waktu = 1.500 m/s × 2 s = 3.000 m. Kedalaman laut = 3.000 m. Prinsip sonar inilah yang digunakan untuk memetakan dasar laut dan mendeteksi kapal selam."
+  },
+
+  // ── SUHU & KALOR ────────────────────────────────────────────
+  {
+    topic: "🌡️ Suhu & Kalor",
+    difficulty: "mudah",
+    q: "Panci logam yang terkena api di kompor, gagangnya menjadi panas walau tidak bersentuhan langsung dengan api. Perpindahan kalor yang terjadi pada gagang panci adalah …",
+    opts: ["Konduksi", "Konveksi", "Radiasi", "Induksi"],
+    ans: 0,
+    exp: "Konduksi: perpindahan kalor melalui zat perantara TANPA disertai perpindahan partikelnya. Terjadi pada benda padat. Kalor merambat dari bagian panas ke bagian dingin melalui bahan panci. Konveksi: perpindahan kalor disertai perpindahan partikel (fluida). Radiasi: perpindahan kalor tanpa medium (contoh: sinar matahari)."
+  },
+  {
+    topic: "🌡️ Suhu & Kalor",
+    difficulty: "sedang",
+    q: "Air mendidih dalam panci menunjukkan gerakan air yang memutar. Hal ini adalah contoh perpindahan kalor secara …",
+    opts: ["Konduksi dari api ke air", "Konveksi dalam cairan", "Radiasi dari api", "Evaporasi permukaan air"],
+    ans: 1,
+    exp: "Konveksi adalah perpindahan kalor yang disertai perpindahan partikel zat perantara. Air di dasar panci dipanaskan → menjadi lebih ringan → naik ke atas. Air di atas yang lebih dingin → lebih berat → turun ke bawah. Siklus ini menciptakan arus konveksi. Angin darat dan angin laut juga terbentuk dari konveksi."
+  },
+  {
+    topic: "🌡️ Suhu & Kalor",
+    difficulty: "sedang",
+    q: "Empat batang penghantar kalor dengan panjang sama dan suhu ujung yang sama diuji. Data luas penampang: P = 2 cm², Q = 2 cm², R = 4 cm², S = 2 cm². Batang mana yang memiliki laju konduksi kalor paling besar dibanding batang P?",
+    opts: ["Batang Q (panjang berbeda)", "Batang R (luas penampang lebih besar)", "Batang S (bahan berbeda)", "Semua sama"],
+    ans: 1,
+    exp: "Laju konduksi kalor: Q/t = k × A × ΔT / L. Faktor yang mempengaruhi: (1) Luas penampang A (makin besar, makin besar laju konduksi), (2) Perbedaan suhu ΔT, (3) Panjang L (makin panjang, makin kecil laju konduksi), (4) Koefisien konduksi termal k (bahan). Batang R memiliki luas penampang (4 cm²) yang lebih besar dari P (2 cm²) → laju konduksi lebih besar."
+  },
+  {
+    topic: "🌡️ Suhu & Kalor",
+    difficulty: "sulit",
+    q: "Suhu 100°C dikonversi ke skala Fahrenheit menghasilkan …",
+    opts: ["180°F", "200°F", "212°F", "273°F"],
+    ans: 2,
+    exp: "Rumus konversi Celsius ke Fahrenheit: °F = (°C × 9/5) + 32. Untuk 100°C: °F = (100 × 9/5) + 32 = 180 + 32 = 212°F. Titik didih air = 100°C = 212°F. Titik beku air = 0°C = 32°F. Suhu tubuh normal = 37°C = 98,6°F."
+  },
+
+  // ── ENERGI & PERUBAHANNYA ───────────────────────────────────
+  {
+    topic: "🔋 Energi & Perubahannya",
+    difficulty: "mudah",
+    q: "Pada saat bola dilempar ke atas dan mencapai titik tertinggi, bentuk energi yang paling dominan adalah …",
+    opts: [
+      "Energi kinetik maksimum",
+      "Energi potensial gravitasi maksimum",
+      "Energi kinetik dan potensial sama besar",
+      "Tidak ada energi karena bola berhenti sesaat"
+    ],
+    ans: 1,
+    exp: "Hukum Kekekalan Energi Mekanik: Ep + Ek = konstan. Di titik tertinggi: kecepatan = 0 → Ek = 0 → semua energi berubah menjadi Ep maksimum. Ep = mgh (m=massa, g=gravitasi, h=ketinggian). Saat jatuh kembali: Ep berkurang → Ek bertambah. Di titik terendah: Ep = 0, Ek = maksimum."
+  },
+  {
+    topic: "🔋 Energi & Perubahannya",
+    difficulty: "sedang",
+    q: "Panel surya (solar panel) mengubah energi matahari menjadi energi listrik. Perubahan energi yang terjadi adalah …",
+    opts: [
+      "Energi panas → Energi listrik",
+      "Energi cahaya → Energi listrik",
+      "Energi kimia → Energi listrik",
+      "Energi mekanik → Energi listrik"
+    ],
+    ans: 1,
+    exp: "Panel surya menggunakan efek fotolistrik: foton cahaya matahari menumbuk sel surya (silikon) → membebaskan elektron → menghasilkan arus listrik. Jadi: Energi CAHAYA → Energi LISTRIK. Pembangkit listrik tenaga uap: energi panas → mekanik → listrik. Baterai: kimia → listrik. Generator: mekanik → listrik."
+  },
+  {
+    topic: "🔋 Energi & Perubahannya",
+    difficulty: "sedang",
+    q: "Sumber energi terbarukan yang memanfaatkan panas bumi (berasal dari dalam Bumi) disebut …",
+    opts: ["Energi surya", "Energi geotermal", "Energi angin", "Energi biomassa"],
+    ans: 1,
+    exp: "Energi geotermal memanfaatkan panas yang tersimpan di dalam bumi (dari aktivitas vulkanik). Air tanah yang bersentuhan dengan batuan panas menghasilkan uap/air panas yang dapat menggerakkan turbin untuk menghasilkan listrik. Indonesia memiliki cadangan geotermal terbesar di dunia (diperkirakan 40% dari total dunia)."
+  },
+  {
+    topic: "🔋 Energi & Perubahannya",
+    difficulty: "sulit",
+    q: "Sebuah bola bermassa 500 gram dilempar vertikal ke atas dengan kecepatan awal 10 m/s. Jika g = 10 m/s², berapakah ketinggian maksimum yang dicapai bola? (Ek = ½mv², Ep = mgh)",
+    opts: ["2,5 m", "5 m", "10 m", "25 m"],
+    ans: 1,
+    exp: "Di titik tertinggi, semua Ek berubah menjadi Ep: Ek awal = Ep atas. ½mv² = mgh → h = v²/(2g) = 10²/(2×10) = 100/20 = 5 m. Massa tidak mempengaruhi ketinggian maksimum (saling meniadakan dalam persamaan). Ketinggian maksimum = 5 meter."
+  },
+
+  // ── BUMI, TATA SURYA & ANTARIKSA ────────────────────────────
+  {
+    topic: "🪐 Bumi, Tata Surya & Antariksa",
+    difficulty: "mudah",
+    q: "Planet yang paling dekat dengan Matahari dalam Tata Surya kita adalah …",
+    opts: ["Venus", "Bumi", "Merkurius", "Mars"],
+    ans: 2,
+    exp: "Urutan planet dari yang paling dekat ke Matahari: Merkurius → Venus → Bumi → Mars → Jupiter → Saturnus → Uranus → Neptunus. Cara mengingat: 'Mereka Vendang Bola Maju Jadi Sederhana Untuk Negeri'. Merkurius adalah planet terkecil dan terdekat dengan Matahari."
+  },
+  {
+    topic: "🪐 Bumi, Tata Surya & Antariksa",
+    difficulty: "sedang",
+    q: "Gerhana Matahari total terjadi ketika …",
+    opts: [
+      "Bumi berada di antara Matahari dan Bulan",
+      "Bulan berada di antara Matahari dan Bumi, bayangan Bulan jatuh ke Bumi",
+      "Matahari berada di antara Bumi dan Bulan",
+      "Bumi, Bulan, dan Matahari membentuk sudut 90°"
+    ],
+    ans: 1,
+    exp: "Gerhana Matahari: BULAN berada di antara Matahari dan Bumi (posisi: Matahari-Bulan-Bumi). Bayangan Bulan (umbra) jatuh ke permukaan Bumi → daerah yang tertutup umbra mengalami gerhana matahari total. Gerhana Bulan: BUMI berada di antara Matahari dan Bulan (posisi: Matahari-Bumi-Bulan)."
+  },
+  {
+    topic: "🪐 Bumi, Tata Surya & Antariksa",
+    difficulty: "sedang",
+    q: "Rotasi Bumi mengakibatkan terjadinya …",
+    opts: [
+      "Pergantian musim di belahan bumi utara dan selatan",
+      "Terjadinya siang dan malam",
+      "Terjadinya gerhana bulan",
+      "Perbedaan lama siang dan malam sepanjang tahun"
+    ],
+    ans: 1,
+    exp: "ROTASI Bumi (berputar pada porosnya, 24 jam): menyebabkan siang dan malam, gerak semu harian Matahari (terbit di timur, terbenam di barat), perbedaan waktu antar wilayah. REVOLUSI Bumi (mengelilingi Matahari, 365,25 hari): menyebabkan pergantian musim, gerak semu tahunan Matahari, perbedaan lama siang-malam."
+  },
+  {
+    topic: "🪐 Bumi, Tata Surya & Antariksa",
+    difficulty: "sedang",
+    q: "Galaksi tempat Tata Surya kita berada dinamakan …",
+    opts: ["Andromeda", "Bimasakti (Milky Way)", "Triangulum", "Sombrero"],
+    ans: 1,
+    exp: "Tata Surya kita berada di galaksi BIMASAKTI (Bahasa Indonesia) atau Milky Way (Bahasa Inggris). Bimasakti adalah galaksi spiral berpalang dengan diameter sekitar 100.000 tahun cahaya. Galaksi Andromeda adalah galaksi terdekat dengan Bimasakti (±2,5 juta tahun cahaya) dan dapat terlihat dengan mata telanjang di malam yang gelap."
+  },
+  {
+    topic: "🪐 Bumi, Tata Surya & Antariksa",
+    difficulty: "sulit",
+    q: "Mengapa Venus lebih panas daripada Merkurius, padahal Venus lebih jauh dari Matahari?",
+    opts: [
+      "Venus lebih besar sehingga menyerap lebih banyak panas",
+      "Venus memiliki atmosfer tebal CO₂ yang menimbulkan efek rumah kaca yang ekstrem",
+      "Venus tidak memiliki rotasi sehingga satu sisi selalu menghadap Matahari",
+      "Venus lebih dekat ke inti galaksi yang lebih panas"
+    ],
+    ans: 1,
+    exp: "Suhu permukaan Venus ≈ 465°C (lebih panas dari Merkurius yang ≈ 430°C di siang hari). Penyebab: Venus memiliki atmosfer sangat tebal (90× lebih tebal dari Bumi) yang terdiri dari CO₂ dan awan asam sulfat → efek rumah kaca ekstrem → panas terperangkap → suhu sangat tinggi. Merkurius hampir tidak memiliki atmosfer sehingga panas mudah lolos."
+  },
+
+  // ── SOAL TAMBAHAN CAMPURAN ──────────────────────────────────
+  {
+    topic: "🧬 Proses Makhluk Hidup",
+    difficulty: "sedang",
+    q: "Organ pada paru-paru yang berbentuk kantung kecil sebagai tempat pertukaran oksigen dan karbon dioksida adalah …",
+    opts: ["Trakea", "Bronkus", "Alveolus", "Diafragma"],
+    ans: 2,
+    exp: "Alveolus (jamak: alveoli) adalah kantung udara kecil di ujung bronkiolus yang merupakan tempat pertukaran gas: O₂ dari udara masuk ke darah, CO₂ dari darah masuk ke udara. Alveolus dikelilingi kapiler darah dan memiliki dinding sangat tipis untuk memudahkan difusi gas. Manusia memiliki sekitar 300 juta alveolus."
+  },
+  {
+    topic: "⚙️ Mekanika",
+    difficulty: "sedang",
+    q: "Benda yang bergerak dengan kecepatan tetap (konstan) dalam garis lurus berarti …",
+    opts: [
+      "Ada gaya yang mendorongnya terus-menerus",
+      "Resultan gaya yang bekerja padanya adalah nol",
+      "Tidak ada gaya gravitasi yang bekerja",
+      "Benda tersebut berada di ruang hampa"
+    ],
+    ans: 1,
+    exp: "Hukum Newton I (Inersia): Benda akan terus bergerak dengan kecepatan konstan ATAU tetap diam, selama resultan gaya yang bekerja padanya NOL. Jika benda bergerak dengan kecepatan tetap, berarti semua gaya yang bekerja saling meniadakan (seimbang). Ini bukan berarti tidak ada gaya sama sekali."
+  },
+  {
+    topic: "🌍 Ekologi & Lingkungan",
+    difficulty: "mudah",
+    q: "Organisme yang berperan menguraikan bangkai hewan dan sisa-sisa tumbuhan menjadi zat anorganik sederhana disebut …",
+    opts: ["Produsen", "Konsumen", "Pengurai (dekomposer)", "Omnivora"],
+    ans: 2,
+    exp: "Pengurai/Dekomposer adalah organisme yang menguraikan bahan organik mati (bangkai, daun gugur) menjadi zat anorganik (mineral, CO₂, air). Contoh: bakteri dan jamur. Peran pengurai sangat penting dalam siklus materi karena mengembalikan unsur-unsur ke tanah agar dapat digunakan kembali oleh produsen."
+  },
+  {
+    topic: "💧 Wujud Benda",
+    difficulty: "sedang",
+    q: "Kapur barus (kamper) yang diletakkan di lemari lama-kelamaan habis tanpa meninggalkan bekas cair. Peristiwa ini disebut …",
+    opts: ["Menguap", "Melebur", "Menyublim", "Mengembun"],
+    ans: 2,
+    exp: "Sublimasi/Menyublim adalah perubahan wujud dari PADAT langsung ke GAS tanpa melalui fase cair. Contoh: kapur barus, dry ice (CO₂ padat), yodium padat. Kebalikannya (gas → padat langsung) disebut desublimasi/deposisi. Menguap adalah cair → gas (memerlukan kalor)."
+  },
+  {
+    topic: "🌡️ Suhu & Kalor",
+    difficulty: "sedang",
+    q: "Pekerja bangunan memasang rel kereta api dengan sedikit celah di setiap sambungan. Mengapa hal ini perlu dilakukan?",
+    opts: [
+      "Agar kereta dapat melaju lebih cepat",
+      "Untuk memberikan ruang bagi rel agar memuai saat panas tanpa melengkung",
+      "Untuk mengurangi gesekan antara roda dan rel",
+      "Agar air hujan dapat mengalir dengan lancar"
+    ],
+    ans: 1,
+    exp: "Pemuaian termal: bahan padat memuai (bertambah panjang) saat dipanaskan. Rel kereta api dibuat dari baja → pada siang hari yang panas, rel memuai dan bertambah panjang. Jika tidak ada celah, rel akan melengkung dan bisa menyebabkan kecelakaan. Celah memberikan 'ruang' agar pemuaian tidak merusak struktur rel."
+  },
+  {
+    topic: "🌿 Keanekaragaman Hayati",
+    difficulty: "sulit",
+    q: "Tumbuhan insektivora seperti kantung semar (Nepenthes) hidup di tanah yang miskin nitrogen. Alasan tumbuhan ini memangsa serangga adalah …",
+    opts: [
+      "Untuk mendapatkan energi tambahan selain dari fotosintesis",
+      "Untuk mendapatkan sumber nitrogen yang tidak tersedia cukup di tanah",
+      "Karena tumbuhan ini tidak dapat melakukan fotosintesis",
+      "Untuk melindungi diri dari herbivora"
+    ],
+    ans: 1,
+    exp: "Kantung semar tetap melakukan fotosintesis untuk energi. Namun, tanah tempat hidupnya (rawa gambut, batu) miskin nitrogen → tidak bisa mendapatkan nitrogen untuk membuat protein. Solusi: memerangkap dan mencerna serangga yang kaya nitrogen. Ini adalah adaptasi luar biasa untuk bertahan hidup di lingkungan ekstrem."
+  },
+  {
+    topic: "⚡ Listrik & Magnet",
+    difficulty: "sedang",
+    q: "Cara paling tepat untuk menghasilkan magnet buatan dari besi lunak adalah dengan …",
+    opts: [
+      "Menggosok besi dengan magnet searah berulang kali",
+      "Memanaskan besi hingga membara kemudian didinginkan",
+      "Memukul-mukul besi dengan palu",
+      "Meletakkan besi di dekat sumber listrik AC"
+    ],
+    ans: 0,
+    exp: "Ada 3 cara membuat magnet: (1) Menggosok dengan magnet permanen (searah, berulang) → magnet sementara pada besi lunak. (2) Induksi → mendekatkan benda ke magnet. (3) Elektromagnet → mengalirkan arus listrik melalui kumparan yang melilit benda. Memanaskan justru dapat menghilangkan sifat kemagnetan."
+  },
+  {
+    topic: "🪐 Bumi, Tata Surya & Antariksa",
+    difficulty: "sedang",
+    q: "Lapisan atmosfer Bumi yang berperan melindungi makhluk hidup dari radiasi ultraviolet Matahari adalah lapisan …",
+    opts: ["Troposfer", "Stratosfer (lapisan ozon)", "Mesosfer", "Termosfer"],
+    ans: 1,
+    exp: "Lapisan ozon (O₃) berada di stratosfer (±15-35 km dari permukaan Bumi). Ozon menyerap sebagian besar radiasi ultraviolet (UV) dari Matahari, melindungi makhluk hidup dari kanker kulit, katarak, dan kerusakan DNA. Penipisan lapisan ozon akibat CFC (chlorofluorocarbon) adalah masalah lingkungan serius."
+  },
+  {
+    topic: "🔬 Metode Ilmiah",
+    difficulty: "sulit",
+    q: "Dalam percobaan efek pupuk pada pertumbuhan tanaman, seorang siswa mendapatkan data bahwa tanaman dengan pupuk organik rata-rata setinggi 25 cm, sedangkan tanpa pupuk setinggi 15 cm. Kesimpulan yang paling tepat adalah …",
+    opts: [
+      "Pupuk organik selalu lebih baik dari pupuk kimia untuk semua tanaman",
+      "Pemberian pupuk organik meningkatkan pertumbuhan tanaman dalam percobaan ini",
+      "Tanaman tidak bisa tumbuh tanpa pupuk",
+      "Percobaan ini membuktikan bahwa pupuk harus selalu diberikan"
+    ],
+    ans: 1,
+    exp: "Kesimpulan ilmiah harus: (1) Berdasarkan data yang ada, (2) Tidak terlalu luas/umum melampaui data, (3) Sesuai dengan hipotesis yang diuji. Pilihan B tepat karena sesuai data dan tidak overgeneralize. Pilihan A terlalu umum (tidak ada data pupuk kimia). Pilihan C salah (tanaman tanpa pupuk tetap tumbuh 15 cm). Pilihan D bersifat normatif, bukan ilmiah."
+  },
+  {
+    topic: "🌍 Ekologi & Lingkungan",
+    difficulty: "sulit",
+    q: "Siklus air (hidrologi) melibatkan beberapa proses. Proses berubahnya uap air di atmosfer menjadi awan dan kemudian turun sebagai hujan disebut …",
+    opts: ["Evaporasi", "Transpirasi", "Kondensasi dan presipitasi", "Infiltrasi"],
+    ans: 2,
+    exp: "Siklus air: Evaporasi (air permukaan → uap air oleh panas Matahari) + Transpirasi (uap air dari tumbuhan) → Kondensasi (uap air menjadi tetes air/awan di atmosfer karena pendinginan) → Presipitasi (hujan/salju/hujan es yang jatuh ke Bumi) → Infiltrasi (air meresap ke tanah) → Run-off (aliran permukaan kembali ke laut)."
+  },
+  {
+    topic: "🔋 Energi & Perubahannya",
+    difficulty: "sedang",
+    q: "Saat kamu menekan tombol senter, terjadi rangkaian perubahan energi. Urutan perubahan energi yang tepat pada senter adalah …",
+    opts: [
+      "Energi cahaya → Energi listrik → Energi kimia",
+      "Energi kimia → Energi listrik → Energi cahaya",
+      "Energi listrik → Energi kimia → Energi cahaya",
+      "Energi kimia → Energi cahaya → Energi listrik"
+    ],
+    ans: 1,
+    exp: "Pada senter: Baterai menyimpan energi kimia → reaksi kimia menghasilkan arus listrik (energi listrik) → arus listrik mengalir melalui bohlam/LED → energi listrik berubah menjadi energi cahaya (dan sedikit panas). Jadi: Energi KIMIA → Energi LISTRIK → Energi CAHAYA."
+  },
+  {
+    topic: "🧬 Proses Makhluk Hidup",
+    difficulty: "mudah",
+    q: "Seorang siswa yang duduk terlalu lama dengan posisi miring ke satu sisi dapat mengalami kelainan tulang belakang berupa tulang yang melengkung ke samping. Kelainan ini disebut …",
+    opts: ["Lordosis", "Kifosis", "Skoliosis", "Rakitis"],
+    ans: 2,
+    exp: "Kelainan tulang belakang: Skoliosis = melengkung ke samping (kiri/kanan), sering akibat posisi duduk salah. Lordosis = melengkung berlebihan ke depan (bagian pinggang). Kifosis = melengkung berlebihan ke belakang (bungkuk). Rakitis = tulang lunak akibat kekurangan vitamin D dan kalsium."
+  },
+  {
+    topic: "💧 Wujud Benda",
+    difficulty: "mudah",
+    q: "Perhatikan peristiwa berikut: (1) Es mencair, (2) Air mendidih, (3) Kapur barus habis, (4) Uap air berubah jadi embun. Peristiwa yang memerlukan kalor (menyerap panas) adalah …",
+    opts: ["(1), (2), dan (3)", "(1) dan (4)", "(2) dan (4)", "(3) dan (4)"],
+    ans: 0,
+    exp: "Perubahan wujud yang MENYERAP kalor (endotermis): Mencair (padat→cair), Menguap (cair→gas), Menyublim (padat→gas). Perubahan wujud yang MELEPAS kalor (eksotermis): Membeku (cair→padat), Mengembun (gas→cair), Deposisi (gas→padat). Es mencair (1) ✓, Air mendidih/menguap (2) ✓, Kapur barus menyublim (3) ✓, Embun = mengembun (4) ✗."
+  },
+  {
+    topic: "🌊 Gelombang & Optik",
+    difficulty: "sedang",
+    q: "Kenapa langit terlihat berwarna biru di siang hari dan merah-jingga saat matahari terbenam?",
+    opts: [
+      "Langit menyerap warna biru dan memancarkan warna merah",
+      "Cahaya biru lebih banyak dihamburkan oleh atmosfer (Hamburan Rayleigh), dan saat senja cahaya melewati atmosfer lebih tebal",
+      "Matahari mengeluarkan lebih banyak cahaya biru di siang hari",
+      "Ozon menyaring warna-warna tertentu tergantung waktu"
+    ],
+    ans: 1,
+    exp: "Hamburan Rayleigh: partikel atmosfer menghamburkan cahaya, dan cahaya bergelombang pendek (biru, ungu) dihamburkan jauh lebih kuat daripada cahaya bergelombang panjang (merah). Siang hari: biru tersebar ke seluruh langit → langit biru. Saat senja: Matahari rendah di cakrawala → cahaya melewati atmosfer lebih tebal → biru habis dihamburkan → hanya merah-jingga yang sampai ke mata kita."
+  }
+];
+
+// ============================================================
+let mode = 'full';
+let currentIndex = 0;
+let score = 0;
+let skipped = 0;
+let answered = [];
+let userAnswers = [];
+let timerInterval;
+let timeLeft;
+let timeSpent = 0;
+const TOTAL_TIME = 90 * 60;
+
+function selectMode(el, m) {
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  mode = m;
+}
+
+function startQuiz() {
+  document.getElementById('splash').style.display = 'none';
+  document.getElementById('quiz').style.display = 'block';
+  document.getElementById('qTotal').textContent = SOAL.length;
+
+  answered = new Array(SOAL.length).fill(null);
+  userAnswers = new Array(SOAL.length).fill(null);
+  currentIndex = 0;
+  score = 0;
+  skipped = 0;
+
+  timeLeft = TOTAL_TIME;
+  timerInterval = setInterval(tickTimer, 1000);
+  renderQuestion();
+}
+
+function tickTimer() {
+  timeLeft--;
+  timeSpent++;
+  const m = Math.floor(timeLeft / 60);
+  const s = timeLeft % 60;
+  const box = document.getElementById('timer');
+  box.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  if (timeLeft <= 300) box.classList.add('urgent');
+  if (timeLeft <= 0) { clearInterval(timerInterval); finishQuiz(); }
+}
+
+function renderQuestion() {
+  const q = SOAL[currentIndex];
+  document.getElementById('qNum').textContent = currentIndex + 1;
+  document.getElementById('progressFill').style.width = `${((currentIndex) / SOAL.length) * 100}%`;
+  document.getElementById('topicTag').textContent = q.topic;
+  document.getElementById('scoreDisplay').textContent = score;
+
+  const diffMap = { mudah: 'diff-mudah', sedang: 'diff-sedang', sulit: 'diff-sulit' };
+  const diffLabel = { mudah: 'Mudah', sedang: 'Sedang', sulit: 'Sulit' };
+
+  document.getElementById('questionText').innerHTML =
+    q.q.replace(/\n/g, '<br>') +
+    `<span class="difficulty-badge ${diffMap[q.difficulty]}">${diffLabel[q.difficulty]}</span>`;
+
+  document.getElementById('questionExtra').innerHTML = '';
+
+  const grid = document.getElementById('optionsGrid');
+  grid.innerHTML = '';
+  const labels = ['A', 'B', 'C', 'D'];
+
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="opt-label">${labels[i]}</span><span>${opt}</span>`;
+    btn.onclick = () => selectAnswer(i);
+    grid.appendChild(btn);
+  });
+
+  // Restore if already answered/skipped
+  const exp = document.getElementById('explanationBox');
+  exp.className = 'explanation';
+  exp.style.display = 'none';
+  document.getElementById('btnNext').style.display = 'none';
+
+  if (answered[currentIndex] !== null) {
+    renderAnswerState(answered[currentIndex]);
+  }
+}
+
+function selectAnswer(choice) {
+  if (answered[currentIndex] !== null) return;
+  answered[currentIndex] = choice;
+  userAnswers[currentIndex] = choice;
+  const correct = SOAL[currentIndex].ans;
+
+  if (choice === correct) {
+    score++;
+    document.getElementById('scoreDisplay').textContent = score;
+  }
+
+  renderAnswerState(choice);
+
+  const exp = document.getElementById('explanationBox');
+  if (mode === 'practice') {
+    const isCorrect = choice === correct;
+    exp.className = 'explanation show' + (isCorrect ? '' : ' wrong-exp');
+    exp.innerHTML = `<strong>${isCorrect ? '✅ Benar!' : '❌ Salah!'}</strong> ${SOAL[currentIndex].exp}`;
+    exp.style.display = 'block';
+  }
+
+  document.getElementById('btnNext').style.display = 'inline-block';
+}
+
+function renderAnswerState(choice) {
+  const q = SOAL[currentIndex];
+  const correct = q.ans;
+  const btns = document.querySelectorAll('.option-btn');
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === correct) btn.classList.add('correct');
+    else if (i === choice && choice !== correct) btn.classList.add('wrong');
+  });
+}
+
+function skipQuestion() {
+  if (answered[currentIndex] === null) {
+    answered[currentIndex] = -1;
+    skipped++;
+  }
+  nextQuestion();
+}
+
+function nextQuestion() {
+  if (currentIndex < SOAL.length - 1) {
+    currentIndex++;
+    renderQuestion();
+  } else {
+    finishQuiz();
+  }
+}
+
+function finishQuiz() {
+  clearInterval(timerInterval);
+  const wrong = answered.filter(a => a !== null && a !== -1 && a !== SOAL[answered.indexOf(a)]?.ans).length;
+  // recalculate
+  let correctCount = 0;
+  let wrongCount = 0;
+  let skipCount = 0;
+  answered.forEach((a, i) => {
+    if (a === null || a === -1) skipCount++;
+    else if (a === SOAL[i].ans) correctCount++;
+    else wrongCount++;
+  });
+
+  const pct = Math.round((correctCount / SOAL.length) * 100);
+  const mins = Math.floor(timeSpent / 60);
+  const secs = timeSpent % 60;
+
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('result').style.display = 'block';
+
+  document.getElementById('resultGrade').textContent = pct;
+  document.getElementById('resCorrect').textContent = correctCount;
+  document.getElementById('resWrong').textContent = wrongCount;
+  document.getElementById('resSkip').textContent = skipCount;
+  document.getElementById('resTime').textContent = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+
+  let emoji, label, sub;
+  if (pct >= 90) { emoji='🏆'; label='Luar Biasa!'; sub='Performa olimpiade sejati!'; }
+  else if (pct >= 75) { emoji='🎉'; label='Sangat Baik!'; sub='Layak maju ke babak berikutnya!'; }
+  else if (pct >= 60) { emoji='😊'; label='Cukup Baik!'; sub='Tetap semangat berlatih!'; }
+  else if (pct >= 40) { emoji='📚'; label='Perlu Belajar Lebih Giat'; sub='Fokus pada topik yang lemah ya!'; }
+  else { emoji='💪'; label='Ayo Terus Berlatih!'; sub='Jangan menyerah, ulang latihan ini!'; }
+
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultLabel').textContent = label;
+  document.getElementById('resultSub').textContent = sub;
+
+  // Review
+  const rl = document.getElementById('reviewList');
+  rl.innerHTML = '';
+  answered.forEach((a, i) => {
+    const q = SOAL[i];
+    const labels = ['A','B','C','D'];
+    let status = '', pill = '';
+    if (a === null || a === -1) { status = '⏭ Dilewati'; pill = '<span class="pill s">Dilewati</span>'; }
+    else if (a === q.ans) { status = `Benar (${labels[a]})`; pill = '<span class="pill c">✅ Benar</span>'; }
+    else { status = `Salah (${labels[a] || '-'}) → Jawaban: ${labels[q.ans]}`; pill = '<span class="pill w">❌ Salah</span>'; }
+
+    const div = document.createElement('div');
+    div.className = 'review-item';
+    div.innerHTML = `
+      <div class="ri-num">${i+1}</div>
+      <div class="ri-body">
+        <div class="ri-q">${q.q.length > 120 ? q.q.substring(0,120)+'…' : q.q}</div>
+        <div class="ri-ans">${pill} ${status}</div>
+        ${(a !== null && a !== -1 && a !== q.ans) ? `<div style="font-size:0.78rem;color:#94a3b8;margin-top:6px;line-height:1.5">${q.exp.length > 150 ? q.exp.substring(0,150)+'…' : q.exp}</div>` : ''}
+      </div>
+    `;
+    rl.appendChild(div);
+  });
+}
+
+function retryQuiz() {
+  document.getElementById('result').style.display = 'none';
+  timeSpent = 0;
+  startQuiz();
+}
+
+function backToHome() {
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('splash').style.display = 'flex';
+  clearInterval(timerInterval);
+}
+</script>
+</body>
+</html>
